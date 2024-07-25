@@ -1,1 +1,79 @@
-<p>navbar works!</p>
+<nav class="px-4 py-3 sm:px-8 border-b-2 border-[#1e3a58] bg-[#ffffffe6]">
+  <div
+    class="nav-container w-full xl:w-[80%] m-auto flex items-center justify-between text-[#1e3a58]"
+  >
+    <div class="flex items-center">
+      <img
+        class="w-[120px] lg:w-[200px] lg:border-r lg:border-[#1e3a58] lg:mr-10 lg:pr-10 cursor-pointer outline-none"
+        src="images/logo.png"
+        routerLink="/"
+        alt="logo"
+        width="200"
+        height="80"
+      />
+      <div class="hidden lg:flex items-center gap-4">
+        <a [routerLink]="['/']">Inicio</a>
+        <a routerLink="agentes">Agentes</a>
+        <a routerLink="propiedades">Propiedades</a>
+        <a routerLink="proyectos">Proyectos</a>
+      </div>
+    </div>
+
+    <div class="hidden lg:flex items-center gap-4">
+      <a routerLink="proyectos">Ingresar</a>
+      <a
+        routerLink="vender-propiedad"
+        class="bg-[#1e3a58] text-white rounded-full px-3 py-2 cursor-pointer"
+        >Vender Propiedad</a
+      >
+    </div>
+
+    <button
+      #menu
+      (click)="openSidebar()"
+      class="block lg:hidden hamburger"
+      aria-label="hamburger button"
+    >
+      <i class="fa-solid fa-bars text-lg"></i>
+    </button>
+  </div>
+</nav>
+
+<p-sidebar [(visible)]="sidebarVisible">
+  <h2 class="p-4 text-center text-xl font-bold">MENÚ</h2>
+  <div class="flex flex-col text-center gap-3">
+    <a
+      class="cursor-pointer hover:font-semibold"
+      [routerLink]="['/']"
+      (click)="openSidebar()"
+      >Inicio</a
+    >
+    <a
+      class="cursor-pointer hover:font-semibold"
+      routerLink="agentes"
+      (click)="openSidebar()"
+      >Agentes</a
+    >
+    <a
+      class="cursor-pointer hover:font-semibold"
+      routerLink="propiedades"
+      (click)="openSidebar()"
+      >Propiedades</a
+    >
+    <a
+      class="cursor-pointer hover:font-semibold"
+      routerLink="proyectos"
+      (click)="openSidebar()"
+      >Proyectos</a
+    >
+    <!-- <a routerLink="contacto">Contacto</a> -->
+
+    <a class="cursor-pointer hover:font-semibold"
+        >Ingresar</a
+      >
+      <a
+        class="bg-[#1e3a58] text-white rounded-full px-3 py-2 cursor-pointer text-center mt-5"
+        >Vender Propiedad</a
+      >
+  </div>
+</p-sidebar>

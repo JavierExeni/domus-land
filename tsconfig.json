@@ -18,13 +18,12 @@
     "importHelpers": true,
     "target": "ES2022",
     "module": "ES2022",
-    "lib": [
-      "ES2022",
-      "dom"
-    ],
-    "types": [
-        "@cloudflare/workers-types/2023-07-01"
-    ]
+    "baseUrl": ".",
+    "lib": ["ES2022", "dom"],
+    "types": ["@cloudflare/workers-types/2023-07-01"],
+    "paths": {
+      "@envs/*": ["src/environments/*"]
+    }
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
