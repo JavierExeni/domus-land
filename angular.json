@@ -20,7 +20,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/domus-land",
+            "outputPath": "dist",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
@@ -32,7 +32,8 @@
               {
                 "glob": "**/*",
                 "input": "public"
-              }
+              },
+              "src/_routes.json"
             ],
             "styles": [
               "src/styles.scss"
