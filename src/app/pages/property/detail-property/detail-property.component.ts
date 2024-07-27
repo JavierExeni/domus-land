@@ -83,46 +83,36 @@ export class DetailPropertyComponent implements OnInit {
   }>;
 
   constructor() {
-    this.activatedRoute.data.subscribe(({ property }) => {
-      this.property = property;
-      const images = property.gallery?.filter((el: any) => !el.is_banner);
-      const banner = property.gallery?.find((el: any) => el.is_banner);
-      this.images = banner ? [banner, ...images!] : [...images!];
-      console.log(property)
-      afterNextRender(() => {
-        this.updateMetaTags(property, banner!);
-      });
-    });
-  }
-
-  ngOnInit(): void {
     // this.activatedRoute.data.subscribe(({ property }) => {
     //   this.property = property;
     //   const images = property.gallery?.filter((el: any) => !el.is_banner);
     //   const banner = property.gallery?.find((el: any) => el.is_banner);
     //   this.images = banner ? [banner, ...images!] : [...images!];
-    //   this.updateMetaTags(property, banner!);
-    //   const latlng = [Number(property.latitude), Number(property.longitude)];
+    //   console.log(property)
+    //   afterNextRender(() => {
+    //     this.updateMetaTags(property, banner!);
+    //   });
     // });
+  }
+
+  ngOnInit(): void {
+    this.activatedRoute.data.subscribe(({ property }) => {
+      this.property = property;
+      const images = property.gallery?.filter((el: any) => !el.is_banner);
+      const banner = property.gallery?.find((el: any) => el.is_banner);
+      this.images = banner ? [banner, ...images!] : [...images!];
+      console.log(property);
+      this.updateMetaTags(property, banner!);
+    });
   }
 
   updateMetaTags(property: Property, banner: PropertyGallery) {
     this.titleService.setTitle(property.property_title);
 
-    // this.metaService.updateTag({ name: 'description', content: property.description });
-    this.metaService.updateTag({
-      property: 'og:title',
-      content: property.property_title,
-    });
-    // this.metaService.updateTag({ property: 'og:description', content: property.description });
-    const imageUrl = banner.file_watermark
-      ? banner.file_watermark
-      : 'default-image-url.jpg';
+    const imageUrl = banner.file_watermark ? banner.file_watermark : 'default-image-url.jpg';
+    this.metaService.updateTag({ property: 'og:title', content: property.property_title });
     this.metaService.updateTag({ property: 'og:image', content: imageUrl });
-    this.metaService.updateTag({
-      property: 'og:url',
-      content: window.location.href,
-    });
+    this.metaService.updateTag({ property: 'og:url', content: window.location.href });
   }
 
   updateEstate(state: PROPERTY_STATE, property: Property) {
