@@ -1,0 +1,67 @@
+<div
+  class="main-filters m-auto py-4 px-4 bg-[#ffffff59] rounded-xl sm:border border-[#ffffff2e] shadow-md"
+>
+  <form [formGroup]="formFilter" (ngSubmit)="onSubmit()" class="flex flex-col gap-3 w-full">
+    <app-bolivia-map class="mb-3 lg:mb-0" formControlName="map"></app-bolivia-map>
+    <p-multiSelect
+      [options]="types"
+      placeholder="Todos los tipos"
+      formControlName="property_type"
+      label="property_type"
+      optionLabel="name"
+      optionValue="id"
+    >
+    </p-multiSelect>
+    <p-multiSelect
+      [options]="categories"
+      placeholder="Todas los categorias"
+      formControlName="property_category"
+      label="property_category"
+      optionLabel="name"
+      optionValue="id"
+    >
+    </p-multiSelect>
+    <p-dropdown
+      [options]="cityService.cities()"
+      placeholder="Todos las ciudades"
+      label="city"
+      formControlName="city"
+      optionLabel="name"
+    >
+    </p-dropdown>
+
+    <p-multiSelect
+      [options]="zones"
+      placeholder="Todos las zonas"
+      formControlName="zones"
+      label="zones"
+      optionLabel="name"
+      optionValue="id"
+      styleClass="max-w-[250px] lg:max-w-[300px]"
+    >
+    </p-multiSelect>
+    <input
+      type="text"
+      formControlName="property_code"
+      aria-label="property_code"
+      pInputText
+      placeholder="Código de propiedad"
+    />
+    <button
+      type="submit"
+      aria-label="submit button"
+      class="text-white w-full bg-[#1e3a58] hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5"
+    >
+      Búsqueda
+    </button>
+
+    <button
+      type="button"
+      aria-label="cancel button"
+      (click)="visible.set(false)"
+      class="block lg:hidden focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5"
+    >
+      Cancelar
+    </button>
+  </form>
+</div>

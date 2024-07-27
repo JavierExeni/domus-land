@@ -1,0 +1,177 @@
+@if (!cityService.isLoading()) {
+<form
+  [formGroup]="formFilter"
+  (ngSubmit)="onSubmit()"
+  class="flex flex-col gap-6"
+>
+  <div class="form-element">
+    <input
+      id="title"
+      class="inner-input"
+      formControlName="property_code"
+      placeholder="Código o Nombre"
+      type="text"
+      pInputText
+    />
+  </div>
+
+  <div class="form-element">
+    <p-dropdown
+      id="ciudad"
+      formControlName="city"
+      [options]="cityService.cities()"
+      optionLabel="name"
+      [filter]="true"
+      emptyFilterMessage="Sin resultados."
+      emptyMessage="Sin resultados."
+      filterBy="name"
+      [showClear]="true"
+      placeholder="Selecciona la Ciudad"
+    >
+    </p-dropdown>
+  </div>
+
+  <div class="form-element">
+    <p-multiSelect
+      id="zona"
+      formControlName="zones"
+      [options]="zones"
+      optionLabel="name"
+      optionValue="id"
+      [filter]="true"
+      emptyFilterMessage="Sin resultados."
+      emptyMessage="Sin resultados."
+      filterBy="name"
+      [showClear]="true"
+      placeholder="Selecciona la Zona"
+      [styleClass]="
+        agentId() ? 'w-full max-h-[100px]' : 'max-w-[230px] max-h-[100px]'
+      "
+    >
+    </p-multiSelect>
+  </div>
+
+  <div>
+    <p-multiSelect
+      id="property_category"
+      formControlName="property_category"
+      [options]="CATEGORIES"
+      optionLabel="name"
+      optionValue="id"
+      [filter]="true"
+      emptyFilterMessage="Sin resultados."
+      emptyMessage="Sin resultados."
+      filterBy="name"
+      placeholder="Seleccionar Categoria"
+    >
+    </p-multiSelect>
+  </div>
+
+  <div>
+    <p-multiSelect
+      id="property_type"
+      formControlName="property_type"
+      [options]="TYPES_ESTATE"
+      optionLabel="name"
+      optionValue="id"
+      emptyFilterMessage="Sin resultados."
+      emptyMessage="Sin resultados."
+      filterBy="name"
+      placeholder="Selecciona Tipo"
+    >
+    </p-multiSelect>
+  </div>
+
+  <div>
+    <p-multiSelect
+      id="features"
+      formControlName="features"
+      [options]="featureService.features()"
+      optionLabel="name"
+      optionValue="id"
+      emptyFilterMessage="Sin resultados."
+      emptyMessage="Sin resultados."
+      filterBy="name"
+      placeholder="Selecciona Caracteristica"
+    >
+    </p-multiSelect>
+  </div>
+
+  <div class="form-element">
+    <label for="precio">Introduzca su precio en $us</label>
+    <div class="grid grid-cols-2 gap-2">
+      <p-inputNumber
+        formControlName="price_min"
+        mode="decimal"
+        placeholder="Precio Min."
+        [minFractionDigits]="2"
+        [min]="0"
+      ></p-inputNumber>
+      <p-inputNumber
+        formControlName="price_max"
+        placeholder="Precio Max."
+        mode="decimal"
+        [minFractionDigits]="2"
+        [min]="0"
+      ></p-inputNumber>
+    </div>
+  </div>
+
+  <div class="form-element">
+    <label for="bedrooms"
+      >Dormitorios <strong>{{ ROOMS | slideOptionProperty }}</strong>
+    </label>
+    <p-slider
+      id="bedrooms"
+      [min]="0"
+      [max]="11"
+      formControlName="bedrooms"
+    ></p-slider>
+  </div>
+
+  <div class="form-element">
+    <label for="bathrooms"
+      >Baños <strong>{{ BATHROOMS | slideOptionProperty }}</strong></label
+    >
+    <p-slider
+      id="bathrooms"
+      [min]="0"
+      [max]="11"
+      formControlName="bathrooms"
+    ></p-slider>
+  </div>
+
+  <div class="form-element">
+    <label for="num_parking"
+      >N° Parqueos <strong>{{ PARKINGS | slideOptionProperty }}</strong></label
+    >
+    <p-slider
+      id="num_parking"
+      [min]="0"
+      [max]="11"
+      formControlName="num_parking"
+    ></p-slider>
+  </div>
+
+  <div class="grid grid-cols-2 gap-2">
+    <p-inputNumber
+      formControlName="area_min"
+      mode="decimal"
+      placeholder="Area Min m2"
+      [minFractionDigits]="2"
+      [min]="0"
+    ></p-inputNumber>
+    <p-inputNumber
+      formControlName="area_max"
+      placeholder="Area Max m2"
+      mode="decimal"
+      [minFractionDigits]="2"
+      [min]="0"
+    ></p-inputNumber>
+  </div>
+</form>
+}@else {
+<app-skeleton [filterForm]="true"></app-skeleton>
+<app-skeleton [filterForm]="true"></app-skeleton>
+<app-skeleton [filterForm]="true"></app-skeleton>
+}

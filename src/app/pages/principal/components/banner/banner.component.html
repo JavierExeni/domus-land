@@ -1,0 +1,74 @@
+@if (!systemService.isLoading()) {
+  <div
+    class="banner-container h-[calc(100vh-74px)] lg:h-[calc(100vh-86px)] bg-[#fff] bg-no-repeat bg-bottom"
+  >
+    <img
+      src="images/banner-static-firma.webp"
+      class="object-cover w-full h-full absolute top-0 left-0 z-0 parallax-img"
+    />
+  </div>
+}
+
+@if (systemService.isLoading()) {
+<div
+  style="filter: brightness(65%)"
+  class="h-[calc(100vh-74px)] lg:h-[calc(100vh-86px)] bg-[#fff] relative"
+></div>
+}
+<div
+  class="absolute w-full h-[calc(100vh-74px)] lg:h-[calc(100vh-86px)] top-0 grid place-items-center"
+>
+  <div
+    class="flex items-center justify-around lg:w-[80%] m-auto lg:h-full lg:gap-10 xl:gap-16"
+  >
+    <div class="xl:w-full">
+      <h1
+        class="m-0 text-white font-bold text-center text-[32px] min-[1150px]:text-5xl min-[1530px]:text-[72px] mb-4"
+      >
+        {{
+          (systemService.system()?.title | uppercase) ||
+            "LA LLAVE PARA TU FUTURO"
+        }}
+      </h1>
+      <div class="flex items-center gap-5">
+        <span class="hidden lg:block h-[2px] w-full bg-[#fff]"></span>
+        <div class="flex gap-2 w-[90%] m-auto">
+          <span
+            (click)="openFilter = !openFilter"
+            class="w-full m-auto rounded-full text-center px-3 py-2 bg-[#1e3a58] text-white lg:hidden cursor-pointer"
+          >
+            ¿Qué estás búscando?
+          </span>
+          <span
+            [routerLink]="['/propiedades']"
+            class="w-full m-auto rounded-full text-center px-3 py-2 bg-[#1e3a58] text-white hidden lg:block lg:w-[250px] cursor-pointer"
+          >
+            ¿Qué estás búscando?
+          </span>
+          <button
+            type="button"
+            aria-label="filter button"
+            (click)="openFilter = !openFilter"
+            class="rounded-full px-3 py-2 bg-[#1e3a58] text-white lg:hidden"
+          >
+            <i class="fa-solid fa-sliders"></i>
+          </button>
+        </div>
+        <span class="hidden lg:block h-[2px] w-full bg-[#fff]"></span>
+      </div>
+    </div>
+    <app-init-filter-form class="hidden lg:block"></app-init-filter-form>
+  </div>
+</div>
+
+@if (openFilter) {
+<div
+  [ngClass]="{
+    'opacity-100 top-0': openFilter,
+    'opacity-0 -top-5': !openFilter
+  }"
+  class="fixed grid place-items-center w-full h-full overflow-auto z-40 transition-all duration-300 ease-in-out close-modal"
+>
+  <app-init-filter-form [(visible)]="openFilter"></app-init-filter-form>
+</div>
+}

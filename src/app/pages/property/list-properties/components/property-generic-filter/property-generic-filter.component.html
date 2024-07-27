@@ -1,0 +1,15 @@
+<div class="flex flex-row flex-wrap gap-2">
+  @for (item of chips; track $index) {
+  <p-tag
+    [pTooltip]="item.type | genericFilterName"
+    tooltipPosition="top"
+    [style]="{ 'background-color': '#1e3a58' }"
+    [rounded]="true"
+  >
+    <div class="flex items-center justify-between gap-2">
+      <span>{{ item.value }}</span>
+      <i class="pi pi-times cursor-pointer" (click)="removeChip(item)"></i>
+    </div>
+  </p-tag>
+  }
+</div>

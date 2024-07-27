@@ -1,0 +1,28 @@
+<div
+  (click)="showByCategory()"
+  class="relative cursor-pointer hover:shadow-lg transition-all duration-200 ease-in-out"
+>
+  <img
+    class="block w-full h-[320px] object-cover rounded-md brightness-75"
+    [ngSrc]="item().image!"
+    [width]="item().width"
+    [height]="item().height"
+    [priority]="item().priority"
+    [alt]="item().title"
+  />
+
+  <div class="absolute top-0 w-full h-full grid place-items-center z-30">
+    <div>
+      <img
+        class="block w-[150px] m-auto mb-2"
+        [ngSrc]="item().icon + '.png'"
+        [width]="item().widthIcon"
+        [height]="item().heightIcon"
+        [alt]="item().title"
+      />
+      <p class="text-white text-center text-2xl font-bold">
+        {{ item().title | uppercase }}
+      </p>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,18 @@
+<div class="w-[80%] mx-auto pb-16">
+  <h1
+    class="text-lg lg:text-5xl text-start font-normal border-b border-[#ecc27d] text-[#ecc27d] mb-2 pb-2"
+  >
+    Propiedades en Oferta
+  </h1>
+  @if (properties.length > 0) {
+  <!-- <swiper class="!pb-10" [config]="swiperConfig" [navigation]="true">
+      <ng-template *ngFor="let item of properties" swiperSlide>
+        <property-offers-card [property]="item"></property-offers-card>
+      </ng-template>
+    </swiper> -->
+  }@else {
+  <app-empty-list-message
+    text="No se encontraron registros de ofertas de la semana."
+  ></app-empty-list-message>
+  }
+</div>

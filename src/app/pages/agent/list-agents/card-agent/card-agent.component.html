@@ -1,0 +1,66 @@
+<div
+  class="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow max-w-[400px] xl:max-w-full xl:flex-row h-full xl:w-full m-auto"
+>
+  @if (item().image_profile) {
+  <img
+    class="object-cover rounded-lg w-[250px] m-4 xl:!mr-0 xl:w-[200px] 2xl:w-[250px] 2xl:m-4"
+    [src]="item().image_profile"
+    [routerLink]="[item().id]"
+    alt="user image profile"
+  />
+  }@else {
+  <img
+    class="object-cover rounded-lg w-[250px] m-4 xl:!mr-0 xl:w-[200px] 2xl:w-[250px] 2xl:m-4"
+    [src]="'images/logo.png'"
+    [routerLink]="[item().id]"
+    alt="default user image profile"
+  />
+  }
+  <div class="flex flex-col justify-between px-4 py-4 leading-normal w-full">
+    <h5 class="text-xl md:text-2xl font-bold tracking-tight text-gray-900 mb-1">
+      {{ item().first_name | titlecase }} {{ item().last_name | titlecase }}
+    </h5>
+    <p class="mb-3 text-sm">
+      <span>Agente Firma Propiedades </span>
+    </p>
+
+    <div class="flex gap-2 mb-2">
+      <p>Ciudad:</p>
+      <p class="font-semibold">{{ item().city!.name | titlecase }}</p>
+    </div>
+    <div class="flex gap-2 mb-2">
+      <p>Whatsapp:</p>
+      <p class="font-semibold">{{ item().phone }}</p>
+    </div>
+    <div class="flex gap-2">
+      <p>P. disponibles:</p>
+      <p class="font-semibold">{{ item().properties_count }}</p>
+    </div>
+    <hr class="h-px my-2 bg-gray-200 border-0 dark:bg-gray-700" />
+    <div>
+      <div class="flex flex-wrap items-center gap-2">
+        <p>Email:</p>
+        <p class="font-semibold">{{ item().email }}</p>
+      </div>
+      <a
+        [routerLink]="[item().id]"
+        class="mt-4 inline-flex cursor-pointer items-center px-3 py-2 text-sm font-medium text-center text-white bg-[#ecc17d] rounded-lg hover:bg-[#e1b878] focus:ring-4 focus:outline-none focus:ring-blue-300"
+      >
+        Ver listados
+        <svg
+          aria-hidden="true"
+          class="w-4 h-4 ml-2 -mr-1"
+          fill="currentColor"
+          viewBox="0 0 20 20"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            fill-rule="evenodd"
+            d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
+            clip-rule="evenodd"
+          ></path>
+        </svg>
+      </a>
+    </div>
+  </div>
+</div>

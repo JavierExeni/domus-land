@@ -1,0 +1,197 @@
+<div
+  class="max-w-[400px] md:max-w-full md:flex bg-white border border-gray-200 rounded-lg shadow-md m-auto h-full hover:shadow-xl transition-all duration-150"
+>
+  @if (property().banner) {
+  <a [routerLink]="['/propiedades/', property().id]" class="flex items-center">
+    <img
+      class="object-cover object-left rounded-t-lg md:rounded-l-lg md:rounded-tr-none md:max-w-[400px] xl:max-w-[400px] md:h-[400px]"
+      [src]="property().banner"
+      alt="property banner"
+    />
+  </a>
+  }@else{
+  <a
+    class="h-[200px] md:h-[400px] grid place-items-center"
+    [routerLink]="['/propiedades/', property().id]"
+  >
+    <img
+      class="object-cover rounded-t-lg md:rounded-l-lg lg:max-w-[250px] xl:max-w-[375px] p-4"
+      [src]="'images/logo.png'"
+      alt="default property banner"
+    />
+  </a>
+  }
+
+  <div class="p-4 w-full">
+    <div
+      class="flex responsive-card-property gap-2 flex-row justify-between items-center mb-2"
+    >
+      <div
+        class="flex flex-col items-baseline md:flex-row md:items-center justify-start gap-2"
+      >
+        <span
+          class="cursor-default bg-[#ecc17d] text-white text-base font-medium px-2.5 py-0.5 rounded border border-[#ecc17d]"
+          >{{ property().property_category | propertyCategory }}</span
+        >
+
+        <span
+          class="bg-[#ecc17d] text-white text-base font-medium px-2.5 py-0.5 rounded border border-[#ecc17d] cursor-default"
+          >{{ property().property_type | propertyType }}</span
+        >
+      </div>
+      <div class="flex items-center justify-start gap-2">
+        <p-button
+          styleClass="p-0 !bg-[#0866ff] border !border-[#0866ff] w-[40px]"
+          (onClick)="share('facebook')"
+          aria-label="share button"
+          icon="pi pi-facebook"
+        ></p-button>
+        <p-button
+          styleClass="p-0 !bg-[#0a66c2] border !border-[#0a66c2] w-[40px]"
+          (onClick)="share('linkedin')"
+          aria-label="share button"
+          icon="pi pi-linkedin"
+        ></p-button>
+        <p-button
+          styleClass="p-0 !bg-[#00a884] border !border-[#00a884] w-[40px]"
+          (onClick)="share('whatsapp')"
+          aria-label="share button"
+          icon="pi pi-whatsapp"
+        ></p-button>
+      </div>
+    </div>
+    <h1 class="font-bold text-xl md:text-2xl mt-5">
+      {{ property().property_title }}
+    </h1>
+
+    <h2 class="font-semibold text-lg lg:text-xl text-[#ecc17d] mb-3">
+      $us. {{ property().price | number }}
+    </h2>
+    @if (ROLE) {
+    <p class="flex gap-2 items-center mb-3">
+      <span class="font-semibold">Agente captador:</span>
+      <span class="text-base italic font-normal text-black">
+        {{ property().created_by ? property().created_by.first_name : "" }}
+        {{ property().created_by ? property().created_by.last_name : "" }}
+      </span>
+    </p>
+    }
+
+    <p class="flex items-baseline gap-2 mt-2">
+      <i class="fa-solid fa-location-dot"></i>
+      <span class="text-xs md:text-sm">
+        {{ property().zone.city!.name }} - {{ property().zone.name }}
+        @if (ROLE) {
+        <span>- {{ property().address }}</span>
+        }
+      </span>
+    </p>
+
+    <div class="grid grid-cols-1 xl:grid-cols-2 2xl:grid-cols-4 gap-2 my-4">
+      @if (property().bedrooms && property().bedrooms != 0) {
+        <a
+          class="flex items-center gap-3 p-3 text-base font-bold text-gray-900 rounded-lg bg-gray-50 hover:bg-gray-100 group hover:shadow"
+        >
+          <i class="fa-solid fa-bed"></i>
+          <div class="cursor-default">
+            <span class="block text-sm font-medium text-gray-500"
+              >Dormitorios
+            </span>
+            <span class="block text-xs font-medium text-gray-500">
+              cant: {{ property().bedrooms }}</span
+            >
+          </div>
+        </a>
+      }
+
+      @if (
+        property().bedrooms_suite &&
+        property().bedrooms_suite != 0 &&
+        property().property_category !== PROPERTY_CATEGORY.LAND
+      ) {
+        <a
+          class="flex items-center gap-3 p-3 text-base font-bold text-gray-900 rounded-lg bg-gray-50 hover:bg-gray-100 group hover:shadow"
+        >
+          <i class="fa-solid fa-bed"></i>
+          <div class="cursor-default">
+            <span class="block text-sm font-medium text-gray-500">Suite </span>
+            <span class="block text-xs font-medium text-gray-500">
+              cant: {{ property().bedrooms_suite }}</span
+            >
+          </div>
+        </a>
+      }
+
+      @if (property().bathrooms && property().bathrooms != 0) {
+        <a
+          class="flex items-center gap-3 p-3 text-base font-bold text-gray-900 rounded-lg bg-gray-50 hover:bg-gray-100 group hover:shadow"
+        >
+          <i class="fa-solid fa-toilet"></i>
+          <div class="cursor-default">
+            <span class="block text-sm font-medium text-gray-500">Baños </span>
+            <span class="block text-xs font-medium text-gray-500">
+              cant: {{ property().bathrooms }}</span
+            >
+          </div>
+        </a>
+      }
+
+      @if (property().built_surface && property().built_surface != 0) {
+        <a
+          class="flex items-center gap-3 p-3 text-base font-bold text-gray-900 rounded-lg bg-gray-50 hover:bg-gray-100 group hover:shadow"
+        >
+          <i class="fa-solid fa-person-shelter"></i>
+          <div class="cursor-default">
+            <span class="block text-sm font-medium text-gray-500"
+              >Sp. construida
+            </span>
+            <span class="block text-xs font-medium text-gray-500">
+              cant: {{ property().built_surface }}</span
+            >
+          </div>
+        </a>
+      }
+
+      @if (
+        property().total_area &&
+        property().total_area != 0 &&
+        property().property_category === PROPERTY_CATEGORY.LAND
+      ) {
+        <a
+          class="flex items-center gap-3 p-3 text-base font-bold text-gray-900 rounded-lg bg-gray-50 hover:bg-gray-100 group hover:shadow"
+        >
+          <i class="fa-solid fa-person-shelter"></i>
+          <div class="cursor-default">
+            <span class="block text-sm font-medium text-gray-500"
+              >Sp. Terreno m2
+            </span>
+            <span class="block text-xs font-medium text-gray-500">
+              cant: {{ property().total_area }}</span
+            >
+          </div>
+        </a>
+      }
+    </div>
+
+    <a
+      [routerLink]="['/propiedades/', property().id]"
+      class="inline-flex cursor-pointer items-center px-3 py-2 text-sm font-medium text-center text-white bg-[#ecc17d] rounded-lg hover:bg-[#e1b878] focus:ring-4 focus:outline-none focus:ring-blue-300"
+    >
+      Ver detalles
+      <svg
+        aria-hidden="true"
+        class="w-4 h-4 ml-2 -mr-1"
+        fill="currentColor"
+        viewBox="0 0 20 20"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          fill-rule="evenodd"
+          d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
+          clip-rule="evenodd"
+        ></path>
+      </svg>
+    </a>
+  </div>
+</div>
+<p-toast></p-toast>

@@ -1,0 +1,12 @@
+<div class="w-[80%] m-auto pb-28">
+  <h1
+    class="text-lg lg:text-5xl text-start font-normal border-b border-[#ecc27d] text-[#ecc27d] mb-10 pb-2"
+  >
+    Búsqueda por categoria
+  </h1>
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+    @for (item of options; track $index) {
+      <app-category-grid-item [item]="item"></app-category-grid-item>
+    }
+  </div>
+</div>

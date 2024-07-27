@@ -1,0 +1,94 @@
+<div class="w-[90%] md:w-[80%] m-auto py-4 lg:!mb-10">
+  <div>
+    <h1 class="text-2xl md:text-3xl font-bold" #titulo>Nuestros Agentes</h1>
+
+    <div
+      class="w-full bg-white border border-gray-200 rounded-lg shadow-md flex flex-col lg:flex-row justify-center sm:justify-between sm:p-4 items-center gap-2 py-3 my-4"
+    >
+      <div class="flex items-center gap-2">
+        <span class="text-base">MOSTRANDO</span>
+        <span class="font-bold">
+          {{ userService.public_agents().results.length }} Agentes
+        </span>
+      </div>
+      <form
+        class="flex flex-col gap-2 md:flex-row items-center md:gap-3"
+        [formGroup]="formSearch"
+      >
+        <div class="form-element">
+          <p-dropdown
+            id="ciudad"
+            formControlName="city_id"
+            [options]="cityService.cities()"
+            optionLabel="name"
+            optionValue="id"
+            [filter]="true"
+            emptyFilterMessage="Sin resultados."
+            emptyMessage="Sin resultados."
+            filterBy="name"
+            [showClear]="true"
+            placeholder="Selecciona la Ciudad"
+            appendTo="body"
+          >
+          </p-dropdown>
+        </div>
+        <span class="p-input-icon-left">
+          <i class="pi pi-search"></i>
+          <input
+            type="text"
+            pInputText
+            placeholder="Buscar..."
+            class="max-md:p-inputtext-sm"
+            formControlName="full_name"
+          />
+        </span>
+      </form>
+    </div>
+  </div>
+  @if (userService.public_agents()) {
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-3 lg:!gap-5 xl:!gap-10">
+    @if(!userService.isLoading()){
+      @for (item of userService.public_agents().results; track $index) {
+        <app-card-agent [item]="item"></app-card-agent>
+      }
+    }@else {
+    <app-skeleton [horizontal]="true"></app-skeleton>
+    <app-skeleton [horizontal]="true"></app-skeleton>
+    <app-skeleton [horizontal]="true"></app-skeleton>
+    <app-skeleton [horizontal]="true"></app-skeleton>
+    <app-skeleton [horizontal]="true"></app-skeleton>
+    <app-skeleton [horizontal]="true"></app-skeleton>
+    <app-skeleton [horizontal]="true"></app-skeleton>
+    <app-skeleton [horizontal]="true"></app-skeleton>
+    <app-skeleton [horizontal]="true"></app-skeleton>
+    <app-skeleton [horizontal]="true"></app-skeleton>
+    }
+  </div>
+  }
+  <div class="hidden lg:block mt-5">
+    <p-paginator
+      (onPageChange)="onPageChange($event)"
+      [first]="first"
+      [rows]="rows"
+      [totalRecords]="userService.public_agents().count"
+    ></p-paginator>
+  </div>
+  <div class="block lg:hidden mt-5">
+    <p-paginator
+      (onPageChange)="onPageChange($event)"
+      [first]="first"
+      [rows]="rows"
+      [totalRecords]="userService.public_agents().count"
+      [showJumpToPageDropdown]="false"
+      [showPageLinks]="false"
+    ></p-paginator>
+  </div>
+
+  <ng-template #emptyList>
+    <div class="flex justify-center h-[50%]">
+      <app-empty-list-message
+        text="No se encontraron agentes registrados."
+      ></app-empty-list-message>
+    </div>
+  </ng-template>
+</div>

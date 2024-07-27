@@ -9,8 +9,68 @@
   @tailwind utilities;
 }
 
-
 @font-face {
   font-family: poppins;
   src: url(/fonts/Poppins-Regular.ttf) format("truetype");
+}
+
+@import "primeicons/primeicons.css";
+
+.p-inputtext,
+.p-password,
+.p-dropdown,
+.p-multiselect,
+.p-element .p-inputtext,
+.p-element .p-inputnumber,
+.p-element .p-calendar,
+.p-inputgroup .p-password,
+.p-password .p-inputtext {
+  width: 100% !important;
+  font-size: 0.875rem !important;
+}
+
+@layer base {
+  .agent-card {
+    @apply rounded-[20px] w-[110px] h-[500px] bg-cover bg-center relative transition-all duration-500 hover:w-[300px] hover:cursor-pointer;
+  }
+}
+
+
+// responsive custom lista de propiedades
+@media screen and (min-width: 1060px) {
+  .responsive-filter {
+    display: block;
+  }
+}
+
+@media screen and (max-width: 1060px) {
+  .responsive-filter-buttons {
+    display: block;
+  }
+}
+
+// responsive card property
+@media screen and (max-width: 1445px) {
+  .responsive-card-property {
+    flex-direction: column !important;
+    align-items: start !important;
+  }
+}
+
+@media screen and (max-width: 1100px) {
+  .responsive_grid_images_detail_property {
+    // grid-cols-1
+    grid-template-columns: repeat(1, minmax(0, 1fr)) !important;
+  }
+}
+@media screen and (min-width: 1101px) {
+  .responsive_grid_images_detail_property_div2 {
+    display: grid !important;
+  }
+}
+// responsive contract type home page
+@media screen and (max-width: 960px) {
+  .responsive-contract-type {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+  }
 }

@@ -1,0 +1,104 @@
+<div
+  (click)="openDetail = true"
+  class="relative grid grid-cols-[742px_250px] gap-2 responsive_grid_images_detail_property"
+>
+  <div class="overflow-hidden bg-cover bg-no-repeat cursor-pointer">
+    <img
+      class="rounded-l-xl w-full max-h-[520px] object-cover transition duration-300 ease-in-out hover:scale-110"
+      [src]="
+        viewImages[0]
+          ? viewImages[0].file_watermark
+          : 'images/ph-room.png'
+      "
+      (error)="errorImage(0)"
+      alt="file watermark 0"
+    />
+  </div>
+  <div class="hidden responsive_grid_images_detail_property_div2 grid-cols-1 gap-2">
+    <div class="overflow-hidden bg-cover bg-no-repeat cursor-pointer">
+      <img
+        class="rounded-tr-xl w-full max-h-[256px] h-full object-cover transition duration-300 ease-in-out hover:scale-110"
+        [src]="
+          viewImages[1]
+            ? viewImages[1].file_watermark
+            : 'images/ph-house2.png'
+        "
+        (error)="errorImage(1)"
+        alt="file watermark 1"
+      />
+    </div>
+    <div class="overflow-hidden bg-cover bg-no-repeat cursor-pointer">
+      <img
+        class="rounded-br-xl w-full max-h-[256px] h-full object-cover transition duration-300 ease-in-out hover:scale-110"
+        [src]="
+          viewImages[2]
+            ? viewImages[2].file_watermark
+            : 'images/ph-house2.png'
+        "
+        (error)="errorImage(2)"
+        alt="file watermark 2"
+      />
+    </div>
+  </div>
+  <span
+    class="absolute top-3 left-3 shadow-2xl bg-[#ecc17d] text-white text-base font-medium mr-2 px-2.5 py-0.5 rounded border border-[#ecc17d] cursor-pointer"
+    >{{ property().property_type | propertyType }}</span
+  >
+  <span
+    class="absolute bottom-3 right-2 flex items-center gap-1 shadow-2xl bg-[#3b4144cc] hover:bg-[#3b4144cc]/60 transition-all duration-200 ease-in-out text-white text-base font-medium mr-2 px-2.5 py-0.5 rounded border border-black cursor-default"
+  >
+    <i class="pi pi-images" style="font-size: 1rem"></i>
+    <span>
+      {{ images().length }}
+    </span>
+  </span>
+</div>
+
+<p-dialog
+  header="Galería de Imágenes"
+  [(visible)]="openDetail"
+  [modal]="true"
+  [draggable]="false"
+  [closeOnEscape]="false"
+  styleClass="w-full sm:max-w-[90%] md:w-auto"
+  appendTo="body"
+>
+  <div class="py-4 lg:hidden">
+    <button
+      type="button"
+      aria-label="open info button"
+      (click)="openInfo = true"
+      class="text-white w-full bg-[#1e3a58] hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2"
+    >
+      Solicitar más Información
+    </button>
+  </div>
+  <div class="grid grid-cols-1 lg:grid-cols-[1fr_auto] gap-3">
+    <app-gallery-list [images]="images()" [property]="property()"></app-gallery-list>
+    <div class="hidden lg:block">
+      <div class="sticky top-0">
+        <app-send-info-form
+          [property]="property()"
+          [user]="user()"
+          [isLink]="isLink()"
+          [showButtons]="false"
+        ></app-send-info-form>
+      </div>
+    </div>
+  </div>
+</p-dialog>
+
+<p-dialog
+  [(visible)]="openInfo"
+  [modal]="true"
+  [draggable]="false"
+  styleClass="w-full sm:max-w-[500px]"
+  appendTo="body"
+>
+  <app-send-info-form
+    [property]="property()"
+    [user]="user()"
+    [isLink]="isLink()"
+    [showButtons]="false"
+  ></app-send-info-form>
+</p-dialog>
