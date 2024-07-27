@@ -1,16 +1,16 @@
-<ng-container *ngIf="combined$ | async as data; else skeleton">
-  <ng-container *ngIf="images.length">
+<!-- <ng-container *ngIf="combined$ | async as data; else skeleton"> -->
+  @if (images.length && property) {
     <div class="w-[90%] lg:max-w-[1000px] mx-auto">
       <div class="py-10">
-        <app-gallery-grid
-          [property]="data.property"
+        <!-- <app-gallery-grid
+          [property]="property!"
           [images]="images"
           [user]="data.user"
           [isLink]="isLink"
-        ></app-gallery-grid>
+        ></app-gallery-grid> -->
       </div>
     </div>
-  </ng-container>
+  }
   <div class="w-[90%] md:w-[80%] lg:max-w-[1250px] mx-auto pb-4 mb-12">
     <div
       class="p-6 bg-white border border-gray-200 rounded-lg shadow-sm mb-3 md:my-5"
@@ -18,20 +18,20 @@
       <div class="flex flex-col gap-2 md:flex-row items-start justify-between">
         <div>
           <h1 class="font-bold text-2xl">
-            {{ data.property.property_title }}
+            {{ property!.property_title }}
           </h1>
           <p class="flex items-baseline gap-2 mt-2">
             <i class="fa-solid fa-location-dot"></i>
             <span class="text-base md:text-lg">
-              {{ data.property.zone.city!.name }} -
-              {{ data.property.zone.name }}
-              <!-- <span *ngIf="ROLE">- {{ data.property.address }}</span> -->
+              {{ property!.zone.city!.name }} -
+              {{ property!.zone.name }}
+              <!-- <span *ngIf="ROLE">- {{ property!.address }}</span> -->
             </span>
           </p>
           <h2
             class="font-semibold text-xl lg:text-2xl md:text-5xl text-[#ecc17d] mt-3"
           >
-            $us. {{ data.property.price | number }}
+            $us. {{ property!.price | number }}
           </h2>
         </div>
         <div>
@@ -89,19 +89,19 @@
               <div class="grid md:grid-cols-2">
                 <p>Comisión propietario:</p>
                 <p class="font-semibold">
-                  {{ data.property.seller_commission | number }} %
+                  {{ property!.seller_commission | number }} %
                 </p>
               </div>
               <div class="grid md:grid-cols-2">
                 <p>Exclusividad:</p>
                 <p class="font-semibold">
-                  {{ data.property.exclusivity ? "Si" : "No" }}
+                  {{ property!.exclusivity ? "Si" : "No" }}
                 </p>
               </div>
               <div class="grid md:grid-cols-2">
                 <p>Otros Comentarios:</p>
                 <p class="font-semibold">
-                  {{ data.property.extras_comments || "Sin comentarios" }}
+                  {{ property!.extras_comments || "Sin comentarios" }}
                 </p>
               </div>
             </div>
@@ -120,48 +120,48 @@
             <div class="grid md:grid-cols-2">
               <p>Código :</p>
               <p class="font-semibold">
-                {{ data.property.code || "Sin código" }}
+                {{ property!.code || "Sin código" }}
               </p>
             </div>
             <div class="grid md:grid-cols-2">
               <p>Precio :</p>
-              <p class="font-semibold">$us. {{ data.property.price | number }}</p>
+              <p class="font-semibold">$us. {{ property!.price | number }}</p>
             </div>
             <div class="grid md:grid-cols-2">
               <p>Sup. Construida :</p>
               <p class="font-semibold">
-                {{ data.property.built_surface }} m<sup>2</sup>
+                {{ property!.built_surface }} m<sup>2</sup>
               </p>
             </div>
             <div class="grid md:grid-cols-2">
               <p>Sup. Terreno :</p>
               <p class="font-semibold">
-                {{ data.property.total_area }} m<sup>2</sup>
+                {{ property!.total_area }} m<sup>2</sup>
               </p>
             </div>
             <div class="grid md:grid-cols-2">
               <p>Zona :</p>
-              <p class="font-semibold">{{ data.property.zone.name }}</p>
+              <p class="font-semibold">{{ property!.zone.name }}</p>
             </div>
           </div>
           <div class="flex flex-col gap-3">
             <div class="grid md:grid-cols-2">
               <p>Habitaciones :</p>
-              <p class="font-semibold">{{ data.property.bedrooms || 0 }}</p>
+              <p class="font-semibold">{{ property!.bedrooms || 0 }}</p>
             </div>
             <div class="grid md:grid-cols-2">
               <p>Habitaciones Suite:</p>
               <p class="font-semibold">
-                {{ data.property.bedrooms_suite || 0 }}
+                {{ property!.bedrooms_suite || 0 }}
               </p>
             </div>
             <div class="grid md:grid-cols-2">
               <p>Baños :</p>
-              <p class="font-semibold">{{ data.property.bathrooms || 0 }}</p>
+              <p class="font-semibold">{{ property!.bathrooms || 0 }}</p>
             </div>
             <div class="grid md:grid-cols-2">
               <p>Estacionamiento :</p>
-              <p class="font-semibold">{{ data.property.num_parking || 0 }}</p>
+              <p class="font-semibold">{{ property!.num_parking || 0 }}</p>
             </div>
           </div>
         </div>
@@ -169,7 +169,7 @@
         <h5 class="text-xl font-bold tracking-tight text-gray-900 mb-3">
           Descripción
         </h5>
-        <div class="content__html" [innerHTML]="data.property.description"></div>
+        <div class="content__html" [innerHTML]="property!.description"></div>
         <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700" />
         <h5 class="text-xl font-bold tracking-tight text-gray-900 mb-3">
           Características De La Propiedad
@@ -178,12 +178,12 @@
       </div>
 
       <!-- formulario de contacto -->
-      <app-send-info-form
+      <!-- <app-send-info-form
         [user]="data.user"
         [property]="data.property"
         [isLink]="isLink"
         [showButtons]="true"
-      ></app-send-info-form>
+      ></app-send-info-form> -->
     </div>
   </div>
   <p-dialog
@@ -196,7 +196,7 @@
   >
     <!-- <app-public-map [property]="data.property"></app-public-map> -->
   </p-dialog>
-</ng-container>
+<!-- </ng-container> -->
 
 <ng-template #skeleton>
   <div class="w-[90%] md:w-[80%] mx-auto py-4 mb-12 flex flex-col gap-3">

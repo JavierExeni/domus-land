@@ -1,4 +1,10 @@
-import { afterNextRender, afterRender, Component, inject, OnInit } from '@angular/core';
+import {
+  afterNextRender,
+  afterRender,
+  Component,
+  inject,
+  OnInit,
+} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Meta, Title } from '@angular/platform-browser';
 import { Clipboard, ClipboardModule } from '@angular/cdk/clipboard';
@@ -76,52 +82,17 @@ export class DetailPropertyComponent implements OnInit {
     latlng: number[];
   }>;
 
-  constructor(){
-    afterNextRender(() => {
-      this.propertyId = Number(this.activatedRoute.snapshot.paramMap.get('id'));
-      this.combined$ = this.propertyService.getSingleProperty(this.propertyId).pipe(
-        switchMap((value) => {
-          const images = value.gallery?.filter((el) => !el.is_banner);
-          const banner = value.gallery?.find((el) => el.is_banner);
-          console.log(banner)
-          this.images = banner ? [banner, ...images!] : [...images!];
-          this.selectedProperty = value;
-
-          this.updateMetaTags(value, banner!);
-
-          const latlng = [Number(value.latitude), Number(value.longitude)];
-          // this.isLoggedIn = this.authService.isLoggedIn;
-          // if (!this.isLoggedIn) {
-          //   let userId = this.activatedRoute.snapshot.paramMap.get('userId');
-          //   if (userId) {
-          //     this.isLink = true;
-          //     return forkJoin([
-          //       this.userService.getSingleEmployee(Number(userId)),
-          //       of(value),
-          //       of(latlng),
-          //     ]).pipe(
-          //       map(([user, property, latlng]) => ({
-          //         user: user,
-          //         property: property,
-          //         latlng: latlng,
-          //       }))
-          //     );
-          //   }
-          // }
-          return forkJoin([
-            this.userService.getSingleEmployee(value.created_by.id),
-            of(value),
-            of(latlng),
-          ]).pipe(
-            map(([user, property, latlng]) => ({
-              user: user,
-              property: property,
-              latlng: latlng,
-            }))
-          );
-        })
-      );
-    })
+  constructor() {
+    this.activatedRoute.data.subscribe(({ property }) => {
+      this.property = property;
+      const images = property.gallery?.filter((el: any) => !el.is_banner);
+      const banner = property.gallery?.find((el: any) => el.is_banner);
+      this.images = banner ? [banner, ...images!] : [...images!];
+      console.log(property)
+      afterNextRender(() => {
+        this.updateMetaTags(property, banner!);
+      });
+    });
   }
 
   ngOnInit(): void {
@@ -133,7 +104,6 @@ export class DetailPropertyComponent implements OnInit {
     //   this.updateMetaTags(property, banner!);
     //   const latlng = [Number(property.latitude), Number(property.longitude)];
     // });
-
   }
 
   updateMetaTags(property: Property, banner: PropertyGallery) {
