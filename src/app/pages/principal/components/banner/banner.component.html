@@ -1,20 +1,19 @@
 @if (!systemService.isLoading()) {
-  <div
-    class="banner-container h-[calc(100vh-74px)] lg:h-[calc(100vh-86px)] bg-[#fff] bg-no-repeat bg-bottom"
-  >
-    <img
+<div
+  class="banner-container h-[calc(100vh-74px)] lg:h-[calc(100vh-86px)] bg-[#fff] bg-no-repeat bg-bottom"
+>
+  <img
       src="images/banner-static-firma.webp"
       class="object-cover w-full h-full absolute top-0 left-0 z-0 parallax-img"
     />
-  </div>
-}
-
-@if (systemService.isLoading()) {
+</div>
+}@else {
 <div
   style="filter: brightness(65%)"
   class="h-[calc(100vh-74px)] lg:h-[calc(100vh-86px)] bg-[#fff] relative"
 ></div>
 }
+
 <div
   class="absolute w-full h-[calc(100vh-74px)] lg:h-[calc(100vh-86px)] top-0 grid place-items-center"
 >

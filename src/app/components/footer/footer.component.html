@@ -51,7 +51,7 @@
         <ul class="text-sm text-[#8a99b3] flex flex-col gap-2">
           <li>
             <a
-              [routerLink]="['/contacto']"
+              (click)="contactFormVisible = true"
               class="hover:text-white hover:pl-2 hover:cursor-pointer transition-all duration-200 ease-in-out"
               >Contacto</a
             >
@@ -131,3 +131,8 @@
     </p>
   </div>
 </footer>
+
+
+<p-dialog [(visible)]="contactFormVisible" [modal]="true" [draggable]="false">
+  <app-contact-form></app-contact-form>
+</p-dialog>

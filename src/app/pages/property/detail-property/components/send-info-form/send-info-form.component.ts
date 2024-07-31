@@ -1,18 +1,29 @@
 import { Component, inject, input } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { AlertService } from '@services/alert.service';
 import { ContactService } from '@services/contact.service';
 import { PropertyService } from '@services/property.service';
 import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
-import { ContactRequest, Employee, getPropertyStateById, Property, PROPERTY_STATE, USER_TYPE } from 'src/app/types';
+import { AuthService } from 'src/app/auth/auth.service';
+import {
+  ContactRequest,
+  Employee,
+  getPropertyStateById,
+  Property,
+  PROPERTY_STATE,
+  USER_TYPE,
+} from 'src/app/types';
 
 @Component({
   selector: 'app-send-info-form',
   standalone: true,
-  imports: [
-    ReactiveFormsModule, DialogModule, ButtonModule
-  ],
+  imports: [ReactiveFormsModule, DialogModule, ButtonModule],
   templateUrl: './send-info-form.component.html',
   styles: ``,
 })
@@ -26,29 +37,17 @@ export class SendInfoFormComponent {
   contactService = inject(ContactService);
   alertService = inject(AlertService);
 
-  // authService = inject(AuthService);
+  authService = inject(AuthService);
   propertyService = inject(PropertyService);
 
   editModal = false;
   userType = USER_TYPE;
   propertyState = PROPERTY_STATE;
 
-  // ROLE = this.authService.currentLoggedUser
-  //   ? this.authService.currentLoggedUser.role
-  //   : null;
-  ROLE = null;
+  ROLE = this.authService.role();
+  CURRENT_AGENT = this.authService.currentLoggedUser();
 
-  // contactType = this.authService.currentLoggedUser ? 2 : 0;
-  contactType = 0;
-
-  get CURRENT_AGENT_ID(): number | null {
-    return null;
-  }
-  // get CURRENT_AGENT_ID(): number | null {
-  //   return this.authService.currentLoggedUser?.role === USER_TYPE.ADMIN
-  //     ? null
-  //     : this.authService.currentLoggedUser!.id;
-  // }
+  contactType = this.authService.currentLoggedUser() ? 2 : 0;
 
   formContact: FormGroup = this.fb.group({
     name: ['', Validators.required],
@@ -143,9 +142,6 @@ export class SendInfoFormComponent {
                   'Error al cambiar de estado la propiedad.'
                 );
               },
-              complete: () => {
-                // Actualizar la propiedad
-              },
             });
         }
       });
@@ -158,7 +154,9 @@ export class SendInfoFormComponent {
     const title = encodeURIComponent(
       'Quiero mas información sobre esta propiedad:'
     );
-    let url = `https://api.whatsapp.com/send?phone=591${this.user().phone}&text=${title}%0A%0A${link}`;
+    let url = `https://api.whatsapp.com/send?phone=591${
+      this.user().phone
+    }&text=${title}%0A%0A${link}`;
     window.open(url, '_blank');
   }
 }

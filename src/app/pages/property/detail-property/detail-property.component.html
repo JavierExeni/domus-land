@@ -1,266 +1,205 @@
 <!-- <ng-container *ngIf="combined$ | async as data; else skeleton"> -->
-  @if (images.length && property) {
-    <div class="w-[90%] lg:max-w-[1000px] mx-auto">
-      <div class="py-10">
-        <!-- <app-gallery-grid
-          [property]="property!"
-          [images]="images"
-          [user]="data.user"
-          [isLink]="isLink"
-        ></app-gallery-grid> -->
-      </div>
-    </div>
-  }
-  <div class="w-[90%] md:w-[80%] lg:max-w-[1250px] mx-auto pb-4 mb-12">
-    <div
-      class="p-6 bg-white border border-gray-200 rounded-lg shadow-sm mb-3 md:my-5"
-    >
-      <div class="flex flex-col gap-2 md:flex-row items-start justify-between">
-        <div>
-          <h1 class="font-bold text-2xl">
-            {{ property!.property_title }}
-          </h1>
-          <p class="flex items-baseline gap-2 mt-2">
-            <i class="fa-solid fa-location-dot"></i>
-            <span class="text-base md:text-lg">
-              {{ property!.zone.city!.name }} -
-              {{ property!.zone.name }}
-              <!-- <span *ngIf="ROLE">- {{ property!.address }}</span> -->
-            </span>
-          </p>
-          <h2
-            class="font-semibold text-xl lg:text-2xl md:text-5xl text-[#ecc17d] mt-3"
-          >
-            $us. {{ property!.price | number }}
-          </h2>
-        </div>
-        <div>
-          <div class="flex items-center justify-start gap-2">
-            <p-button
-              styleClass="p-0 !bg-[#0866ff] border !border-[#0866ff]"
-              aria-label="share button"
-              (onClick)="share('facebook')"
-              icon="pi pi-facebook"
-            ></p-button>
-            <p-button
-              styleClass="p-0 !bg-[#0a66c2] border !border-[#0a66c2]"
-              (onClick)="share('linkedin')"
-              aria-label="share button"
-              icon="pi pi-linkedin"
-            ></p-button>
-            <p-button
-              styleClass="p-0 !bg-[#00a884] border !border-[#00a884]"
-              (onClick)="share('whatsapp')"
-              aria-label="share button"
-              icon="pi pi-whatsapp"
-            ></p-button>
-          </div>
-          <button
-            type="button"
-            (click)="mapModal = true"
-            aria-label="map button"
-            class="text-white w-full max-h-[40px] bg-[#1e3a58] hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm py-2.5 text-center flex justify-center gap-2 items-center mt-3"
-          >
-            <i class="fa-solid fa-map-location-dot"></i>
-            <span> Ver Mapa </span>
-          </button>
-          <button
-            *ngIf="isLoggedIn"
-            type="button"
-            aria-label="share property button"
-            (click)="shareProperty()"
-            class="text-white w-full max-h-[40px] bg-[#1e3a58] hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm py-2.5 text-center flex justify-center gap-2 items-center mt-3"
-          >
-            <i class="fa-solid fa-share-nodes"></i>
-            <span> Compartir Propiedad </span>
-          </button>
-        </div>
-      </div>
-      <!-- <ng-container *ngIf="ROLE">
-        <div *ngIf="ROLE == userType.ADMIN || ROLE == userType.AGENTE">
-          <br />
-          <hr />
-          <br />
-          <h5 class="text-xl font-bold tracking-tight text-gray-900 mb-3">
-            Información para Agentes
-          </h5>
-          <div class="grid md:grid-cols-2 gap-3">
-            <div class="flex flex-col gap-3">
-              <div class="grid md:grid-cols-2">
-                <p>Comisión propietario:</p>
-                <p class="font-semibold">
-                  {{ property!.seller_commission | number }} %
-                </p>
-              </div>
-              <div class="grid md:grid-cols-2">
-                <p>Exclusividad:</p>
-                <p class="font-semibold">
-                  {{ property!.exclusivity ? "Si" : "No" }}
-                </p>
-              </div>
-              <div class="grid md:grid-cols-2">
-                <p>Otros Comentarios:</p>
-                <p class="font-semibold">
-                  {{ property!.extras_comments || "Sin comentarios" }}
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </ng-container> -->
-    </div>
-
-    <div class="grid lg:grid-cols-[1fr_auto] gap-3 lg:!gap-5">
-      <div class="p-6 bg-white border border-gray-200 rounded-lg shadow-sm">
-        <h5 class="text-xl font-bold tracking-tight text-gray-900 mb-3">
-          Detalles de la Propiedad
-        </h5>
-        <div class="grid md:grid-cols-2 gap-3">
-          <div class="flex flex-col gap-3">
-            <div class="grid md:grid-cols-2">
-              <p>Código :</p>
-              <p class="font-semibold">
-                {{ property!.code || "Sin código" }}
-              </p>
-            </div>
-            <div class="grid md:grid-cols-2">
-              <p>Precio :</p>
-              <p class="font-semibold">$us. {{ property!.price | number }}</p>
-            </div>
-            <div class="grid md:grid-cols-2">
-              <p>Sup. Construida :</p>
-              <p class="font-semibold">
-                {{ property!.built_surface }} m<sup>2</sup>
-              </p>
-            </div>
-            <div class="grid md:grid-cols-2">
-              <p>Sup. Terreno :</p>
-              <p class="font-semibold">
-                {{ property!.total_area }} m<sup>2</sup>
-              </p>
-            </div>
-            <div class="grid md:grid-cols-2">
-              <p>Zona :</p>
-              <p class="font-semibold">{{ property!.zone.name }}</p>
-            </div>
-          </div>
-          <div class="flex flex-col gap-3">
-            <div class="grid md:grid-cols-2">
-              <p>Habitaciones :</p>
-              <p class="font-semibold">{{ property!.bedrooms || 0 }}</p>
-            </div>
-            <div class="grid md:grid-cols-2">
-              <p>Habitaciones Suite:</p>
-              <p class="font-semibold">
-                {{ property!.bedrooms_suite || 0 }}
-              </p>
-            </div>
-            <div class="grid md:grid-cols-2">
-              <p>Baños :</p>
-              <p class="font-semibold">{{ property!.bathrooms || 0 }}</p>
-            </div>
-            <div class="grid md:grid-cols-2">
-              <p>Estacionamiento :</p>
-              <p class="font-semibold">{{ property!.num_parking || 0 }}</p>
-            </div>
-          </div>
-        </div>
-        <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700" />
-        <h5 class="text-xl font-bold tracking-tight text-gray-900 mb-3">
-          Descripción
-        </h5>
-        <div class="content__html" [innerHTML]="property!.description"></div>
-        <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700" />
-        <h5 class="text-xl font-bold tracking-tight text-gray-900 mb-3">
-          Características De La Propiedad
-        </h5>
-        <p>Sin caracteristicas.</p>
-      </div>
-
-      <!-- formulario de contacto -->
-      <!-- <app-send-info-form
-        [user]="data.user"
-        [property]="data.property"
-        [isLink]="isLink"
-        [showButtons]="true"
-      ></app-send-info-form> -->
-    </div>
+@if (images.length && property && agent) {
+<div class="w-[90%] lg:max-w-[1000px] mx-auto">
+  <div class="py-10">
+    <app-gallery-grid
+      [property]="property"
+      [images]="images"
+      [user]="agent"
+      [isLink]="isLink"
+    ></app-gallery-grid>
   </div>
-  <p-dialog
-    *ngIf="mapModal"
-    [(visible)]="mapModal"
-    [modal]="true"
-    [draggable]="false"
-    [style]="{ width: '80vw' }"
-    header="Ubicación de la propiedad"
+</div>
+}
+<div class="w-[90%] md:w-[80%] lg:max-w-[1250px] mx-auto pb-4 mb-12">
+  <div
+    class="p-6 bg-white border border-gray-200 rounded-lg shadow-sm mb-3 md:my-5"
   >
-    <!-- <app-public-map [property]="data.property"></app-public-map> -->
-  </p-dialog>
-<!-- </ng-container> -->
-
-<ng-template #skeleton>
-  <div class="w-[90%] md:w-[80%] mx-auto py-4 mb-12 flex flex-col gap-3">
-    <div class="border-round border-1 surface-border p-4 surface-card">
-      <div class="flex mb-3">
-        <p-skeleton shape="circle" size="4rem" styleClass="mr-2"></p-skeleton>
-        <div>
-          <p-skeleton width="10rem" styleClass="mb-2"></p-skeleton>
-          <p-skeleton width="5rem" styleClass="mb-2"></p-skeleton>
-          <p-skeleton height=".5rem"></p-skeleton>
-        </div>
+    <div class="flex flex-col gap-2 md:flex-row items-start justify-between">
+      <div>
+        <h1 class="font-bold text-2xl">
+          {{ property!.property_title }}
+        </h1>
+        <p class="flex items-baseline gap-2 mt-2">
+          <i class="fa-solid fa-location-dot"></i>
+          <span class="text-base md:text-lg">
+            {{ property!.zone.city!.name }} -
+            {{ property!.zone.name }}
+            @if (authService.isLoggedIn()) {
+            <span>- {{ property!.address }}</span>
+            }
+          </span>
+        </p>
+        <h2
+          class="font-semibold text-xl lg:text-2xl md:text-5xl text-[#ecc17d] mt-3"
+        >
+          $us. {{ property!.price | number }}
+        </h2>
       </div>
-      <p-skeleton width="100%" height="150px"></p-skeleton>
-      <div class="flex justify-content-between mt-3">
-        <p-skeleton width="4rem" height="2rem"></p-skeleton>
-        <p-skeleton width="4rem" height="2rem"></p-skeleton>
-      </div>
-    </div>
-    <div class="flex flex-col lg:flex-row gap-3">
-      <div
-        class="border-round border-1 surface-border p-4 surface-card w-full lg:h-[500px]"
-      >
-        <div class="flex mb-3">
-          <p-skeleton shape="circle" size="4rem" styleClass="mr-2"></p-skeleton>
-          <div>
-            <p-skeleton width="10rem" styleClass="mb-2"></p-skeleton>
-            <p-skeleton width="5rem" styleClass="mb-2"></p-skeleton>
-            <p-skeleton height=".5rem"></p-skeleton>
-          </div>
+      <div>
+        <div class="flex items-center justify-start gap-2">
+          <p-button
+            styleClass="p-0 !bg-[#0866ff] border !border-[#0866ff]"
+            aria-label="share button"
+            (onClick)="share('facebook')"
+            icon="pi pi-facebook"
+          ></p-button>
+          <p-button
+            styleClass="p-0 !bg-[#0a66c2] border !border-[#0a66c2]"
+            (onClick)="share('linkedin')"
+            aria-label="share button"
+            icon="pi pi-linkedin"
+          ></p-button>
+          <p-button
+            styleClass="p-0 !bg-[#00a884] border !border-[#00a884]"
+            (onClick)="share('whatsapp')"
+            aria-label="share button"
+            icon="pi pi-whatsapp"
+          ></p-button>
         </div>
-        <p-skeleton width="100%" height="150px"></p-skeleton>
-        <div class="flex justify-content-between mt-3 lg:mb-3">
-          <p-skeleton width="4rem" height="2rem"></p-skeleton>
-          <p-skeleton width="4rem" height="2rem"></p-skeleton>
-        </div>
-        <p-skeleton
-          class="hidden lg:block"
-          width="100%"
-          height="150px"
-        ></p-skeleton>
-      </div>
-      <div
-        class="border-round border-1 surface-border p-4 surface-card w-full lg:h-[500px]"
-      >
-        <div class="flex mb-3">
-          <p-skeleton shape="circle" size="4rem" styleClass="mr-2"></p-skeleton>
-          <div>
-            <p-skeleton width="10rem" styleClass="mb-2"></p-skeleton>
-            <p-skeleton width="5rem" styleClass="mb-2"></p-skeleton>
-            <p-skeleton height=".5rem"></p-skeleton>
-          </div>
-        </div>
-        <p-skeleton width="100%" height="150px"></p-skeleton>
-        <div class="flex justify-content-between mt-3 lg:mb-3">
-          <p-skeleton width="4rem" height="2rem"></p-skeleton>
-          <p-skeleton width="4rem" height="2rem"></p-skeleton>
-        </div>
-        <p-skeleton
-          class="hidden lg:block"
-          width="100%"
-          height="150px"
-        ></p-skeleton>
+        <button
+          type="button"
+          (click)="mapModal = true"
+          aria-label="map button"
+          class="text-white w-full max-h-[40px] bg-[#1e3a58] hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm py-2.5 text-center flex justify-center gap-2 items-center mt-3"
+        >
+          <i class="fa-solid fa-map-location-dot"></i>
+          <span> Ver Mapa </span>
+        </button>
+        @if (authService.isLoggedIn()) {
+        <button
+          type="button"
+          aria-label="share property button"
+          (click)="shareProperty()"
+          class="text-white w-full max-h-[40px] bg-[#1e3a58] hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm py-2.5 text-center flex justify-center gap-2 items-center mt-3"
+        >
+          <i class="fa-solid fa-share-nodes"></i>
+          <span> Compartir </span>
+        </button>
+        }
       </div>
     </div>
+    @if(authService.isLoggedIn()){
+    <div>
+      <br />
+      <hr />
+      <br />
+      <h5 class="text-xl font-bold tracking-tight text-gray-900 mb-3">
+        Información para Agentes
+      </h5>
+      <div class="grid md:grid-cols-2 gap-3">
+        <div class="flex flex-col gap-3">
+          <div class="grid md:grid-cols-2">
+            <p>Comisión propietario:</p>
+            <p class="font-semibold">
+              {{ property!.seller_commission | number }} %
+            </p>
+          </div>
+          <div class="grid md:grid-cols-2">
+            <p>Exclusividad:</p>
+            <p class="font-semibold">
+              {{ property!.exclusivity ? "Si" : "No" }}
+            </p>
+          </div>
+          <div class="grid md:grid-cols-2">
+            <p>Otros Comentarios:</p>
+            <p class="font-semibold">
+              {{ property!.extras_comments || "Sin comentarios" }}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    }
   </div>
-</ng-template>
+
+  <div class="grid lg:grid-cols-[1fr_auto] gap-3 lg:!gap-5">
+    <div class="p-6 bg-white border border-gray-200 rounded-lg shadow-sm">
+      <h5 class="text-xl font-bold tracking-tight text-gray-900 mb-3">
+        Detalles de la Propiedad
+      </h5>
+      <div class="grid md:grid-cols-2 gap-3">
+        <div class="flex flex-col gap-3">
+          <div class="grid md:grid-cols-2">
+            <p>Código :</p>
+            <p class="font-semibold">
+              {{ property!.code || "Sin código" }}
+            </p>
+          </div>
+          <div class="grid md:grid-cols-2">
+            <p>Precio :</p>
+            <p class="font-semibold">$us. {{ property!.price | number }}</p>
+          </div>
+          <div class="grid md:grid-cols-2">
+            <p>Sup. Construida :</p>
+            <p class="font-semibold">
+              {{ property!.built_surface }} m<sup>2</sup>
+            </p>
+          </div>
+          <div class="grid md:grid-cols-2">
+            <p>Sup. Terreno :</p>
+            <p class="font-semibold">
+              {{ property!.total_area }} m<sup>2</sup>
+            </p>
+          </div>
+          <div class="grid md:grid-cols-2">
+            <p>Zona :</p>
+            <p class="font-semibold">{{ property!.zone.name }}</p>
+          </div>
+        </div>
+        <div class="flex flex-col gap-3">
+          <div class="grid md:grid-cols-2">
+            <p>Habitaciones :</p>
+            <p class="font-semibold">{{ property!.bedrooms || 0 }}</p>
+          </div>
+          <div class="grid md:grid-cols-2">
+            <p>Habitaciones Suite:</p>
+            <p class="font-semibold">
+              {{ property!.bedrooms_suite || 0 }}
+            </p>
+          </div>
+          <div class="grid md:grid-cols-2">
+            <p>Baños :</p>
+            <p class="font-semibold">{{ property!.bathrooms || 0 }}</p>
+          </div>
+          <div class="grid md:grid-cols-2">
+            <p>Estacionamiento :</p>
+            <p class="font-semibold">{{ property!.num_parking || 0 }}</p>
+          </div>
+        </div>
+      </div>
+      <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700" />
+      <h5 class="text-xl font-bold tracking-tight text-gray-900 mb-3">
+        Descripción
+      </h5>
+      <div class="content__html" [innerHTML]="property!.description"></div>
+      <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700" />
+      <h5 class="text-xl font-bold tracking-tight text-gray-900 mb-3">
+        Características De La Propiedad
+      </h5>
+      <p>Sin caracteristicas.</p>
+    </div>
+
+    <!-- formulario de contacto -->
+    @if (property && agent) {
+    <app-send-info-form
+      [user]="agent"
+      [property]="property"
+      [isLink]="isLink"
+      [showButtons]="true"
+    ></app-send-info-form>
+    }
+  </div>
+</div>
+@if (mapModal) {
+<p-dialog
+  [(visible)]="mapModal"
+  [modal]="true"
+  [draggable]="false"
+  [style]="{ width: '80vw' }"
+  header="Ubicación de la propiedad"
+>
+  <!-- <app-public-map [property]="data.property"></app-public-map> -->
+</p-dialog>
+}
 <p-toast></p-toast>

@@ -11,6 +11,7 @@ import { ButtonModule } from 'primeng/button';
 import { ToastModule } from 'primeng/toast';
 import { PropertyTypePipe } from '../../../../../pipes/property-type.pipe';
 import { PropertyCategoryPipe } from '../../../../../pipes/property-category.pipe';
+import { AuthService } from 'src/app/auth/auth.service';
 
 @Component({
   selector: 'app-property-card',
@@ -33,7 +34,7 @@ import { PropertyCategoryPipe } from '../../../../../pipes/property-category.pip
 export class PropertyCardComponent {
   property = input.required<Property>();
 
-  // authService = inject(AuthService);
+  authService = inject(AuthService);
   metaService = inject(Meta);
   clipboard = inject(Clipboard);
   messageService = inject(MessageService);
@@ -41,7 +42,7 @@ export class PropertyCardComponent {
 
   PROPERTY_CATEGORY = PROPERTY_CATEGORY;
 
-  ROLE = null;
+  ROLE = this.authService.isLoggedIn();
 
   share(social: string) {
     const link = encodeURI(
@@ -51,25 +52,25 @@ export class PropertyCardComponent {
     const imageUrl = this.property().banner;
     this.metaService.updateTag({ property: 'og:image', content: imageUrl });
     this.metaService.updateTag({ property: 'og:url', content: link });
-    // switch (social) {
-    //   case 'facebook':
-    //     const href_fb = `https://www.facebook.com/share.php?u=${link}`;
-    //     window.open(href_fb, '_blank');
-    //     break;
-    //   case 'whatsapp':
-    //     if (this.authService.currentLoggedUser) {
-    //       this.copyPathName();
-    //     } else {
-    //       title = 'Me interesa esta propiedad de Firma Propiedades:'
-    //       const href_wsp = `https://api.whatsapp.com/send?phone=591${this.property().created_by.phone}&text=${title}%0A%0A${link}`;
-    //       window.open(href_wsp, '_blank');
-    //     }
-    //     break;
-    //   case 'linkedin':
-    //     const href_link = `https://www.linkedin.com/sharing/share-offsite/?url=${link}`;
-    //     window.open(href_link, '_blank');
-    //     break;
-    // }
+    switch (social) {
+      case 'facebook':
+        const href_fb = `https://www.facebook.com/share.php?u=${link}`;
+        window.open(href_fb, '_blank');
+        break;
+      case 'whatsapp':
+        if (this.authService.currentLoggedUser()) {
+          this.copyPathName();
+        } else {
+          title = 'Me interesa esta propiedad de Firma Propiedades:'
+          const href_wsp = `https://api.whatsapp.com/send?phone=591${this.property().created_by.phone}&text=${title}%0A%0A${link}`;
+          window.open(href_wsp, '_blank');
+        }
+        break;
+      case 'linkedin':
+        const href_link = `https://www.linkedin.com/sharing/share-offsite/?url=${link}`;
+        window.open(href_link, '_blank');
+        break;
+    }
   }
 
   copyPathName() {

@@ -33,18 +33,14 @@ export class ListAgentsComponent {
   userService = inject(UserService);
   cityService = inject(CityService);
 
-  @ViewChild('titulo') titulo: ElementRef | undefined;
-
   formSearch = this.fb.group({
     full_name: [''],
-    city_id: [''],
+    city_id: [null],
     role: USER_TYPE.AGENTE,
   });
 
   first: number = 0;
   rows: number = 20;
-
-  constructor(){}
 
   ngOnInit(): void {
     this.userService.loadPublicEmployeeByRoleList(USER_TYPE.AGENTE);
@@ -67,6 +63,10 @@ export class ListAgentsComponent {
     this.rows = event.rows!;
     const page = event.page! + 1;
     this.userService.loadPublicEmployeeByRoleList(USER_TYPE.AGENTE, '', page);
-    this.titulo?.nativeElement.scrollIntoView({ behavior: 'smooth' });
+    window.scroll({
+      top: 0,
+      left: 0,
+      behavior: 'smooth',
+    });
   }
 }

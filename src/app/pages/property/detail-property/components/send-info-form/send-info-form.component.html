@@ -128,7 +128,7 @@
       </button>
     </form>
   </div>
-  @if (ROLE && showButtons()) { @if (CURRENT_AGENT_ID ==
+  @if (ROLE && showButtons() && CURRENT_AGENT) { @if (CURRENT_AGENT.id ==
   property().created_by.id || ROLE == userType.ADMIN) {
   <div
     class="p-6 bg-white border border-gray-200 rounded-lg shadow-sm flex flex-col gap-3"

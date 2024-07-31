@@ -67,7 +67,7 @@
     <h2 class="font-semibold text-lg lg:text-xl text-[#ecc17d] mb-3">
       $us. {{ property().price | number }}
     </h2>
-    @if (ROLE) {
+    @if (authService.role()) {
     <p class="flex gap-2 items-center mb-3">
       <span class="font-semibold">Agente captador:</span>
       <span class="text-base italic font-normal text-black">
@@ -81,7 +81,7 @@
       <i class="fa-solid fa-location-dot"></i>
       <span class="text-xs md:text-sm">
         {{ property().zone.city!.name }} - {{ property().zone.name }}
-        @if (ROLE) {
+        @if (authService.role()) {
         <span>- {{ property().address }}</span>
         }
       </span>
@@ -174,7 +174,7 @@
     </div>
 
     <a
-      [routerLink]="['/propiedades/', property().id]"
+      [routerLink]="this.authService.isLoggedIn() ? ['/propiedades/', property().id, this.authService.currentLoggedUser().id] : ['/propiedades/', property().id]"
       class="inline-flex cursor-pointer items-center px-3 py-2 text-sm font-medium text-center text-white bg-[#ecc17d] rounded-lg hover:bg-[#e1b878] focus:ring-4 focus:outline-none focus:ring-blue-300"
     >
       Ver detalles

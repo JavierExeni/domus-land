@@ -54,21 +54,17 @@
         </div>
 
         <div class="grid grid-cols-1 gap-5 w-full">
-          @if (!propertyService.isLoading()) {
-            @if (propertyService.public_properties().results.length) {
-              @for (item of propertyService.public_properties().results; track $index) {
-                <app-property-card
-                [property]="item"
-              ></app-property-card>
-              }
-            }@else {
-              <div class="flex justify-center h-[50%]">
-                <app-empty-list-message
-                  text="No se encontraron propiedades registradas."
-                ></app-empty-list-message>
-              </div>
-            }
-          }@else {
+          @if (!propertyService.isLoading()) { @if
+          (propertyService.public_properties().results.length) { @for (item of
+          propertyService.public_properties().results; track $index) {
+          <app-property-card [property]="item"></app-property-card>
+          } }@else {
+          <div class="flex justify-center h-[50%]">
+            <app-empty-list-message
+              text="No se encontraron propiedades registradas."
+            ></app-empty-list-message>
+          </div>
+          } }@else {
           <app-skeleton [horizontal]="true"></app-skeleton>
           <app-skeleton [horizontal]="true"></app-skeleton>
           <app-skeleton [horizontal]="true"></app-skeleton>
@@ -101,3 +97,11 @@
     </div>
   </div>
 </div>
+
+<p-sidebar [(visible)]="sidebarFilters" position="right">
+  @if(sidebarFilters) {
+  <app-property-filter-form
+    [(visible)]="sidebarFilters"
+  ></app-property-filter-form>
+  }
+</p-sidebar>

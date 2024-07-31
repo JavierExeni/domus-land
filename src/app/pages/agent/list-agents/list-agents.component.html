@@ -1,14 +1,14 @@
 <div class="w-[90%] md:w-[80%] m-auto py-4 lg:!mb-10">
   <div>
-    <h1 class="text-2xl md:text-3xl font-bold" #titulo>Nuestros Agentes</h1>
+    <h1 class="text-2xl md:text-3xl font-bold">Nuestros Agentes</h1>
 
     <div
-      class="w-full bg-white border border-gray-200 rounded-lg shadow-md flex flex-col lg:flex-row justify-center sm:justify-between sm:p-4 items-center gap-2 py-3 my-4"
+      class="w-full bg-white m-auto max-w-[400px] md:max-w-[100%] border border-gray-200 rounded-lg shadow-md flex flex-col lg:flex-row justify-center sm:justify-between sm:p-4 items-center gap-2 py-3 my-4"
     >
       <div class="flex items-center gap-2">
         <span class="text-base">MOSTRANDO</span>
         <span class="font-bold">
-          {{ userService.public_agents().results.length }} Agentes
+          {{ userService.public_agents().count }} Agentes
         </span>
       </div>
       <form

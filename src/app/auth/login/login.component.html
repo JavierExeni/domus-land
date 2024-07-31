@@ -1,0 +1,40 @@
+<form class="flex flex-col gap-6" (ngSubmit)="onSubmit()" [formGroup]="form">
+  <div>
+    <label for="email" class="block mb-2 text-sm font-medium text-gray-900"
+      >Nombre de usuario</label
+    >
+    <input
+      type="text"
+      id="username"
+      formControlName="username"
+      class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+      required
+    />
+  </div>
+  <div>
+    <label for="password" class="block mb-2 text-sm font-medium text-gray-900"
+      >Contraseña</label
+    >
+    <input
+      type="password"
+      id="password"
+      formControlName="password"
+      class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+      required
+    />
+  </div>
+  @if (invalid) {
+    <p-messages
+    [(value)]="messages!"
+    [enableService]="false"
+    [closable]="false"
+    />
+  }
+  <p-button
+    type="submit"
+    aria-label="submit button"
+    [disabled]="form.invalid"
+    [loading]="authService.isLoading()"
+    label="Iniciar Sesión"
+  ></p-button>
+</form>

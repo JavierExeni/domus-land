@@ -1,6 +1,6 @@
 import { NgOptimizedImage, UpperCasePipe } from '@angular/common';
 import { Component, inject, input } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { PROPERTY_CATEGORY } from 'src/app/types';
 
 export interface CategoryItem {
@@ -18,16 +18,12 @@ export interface CategoryItem {
 @Component({
   selector: 'app-category-grid-item',
   standalone: true,
-  imports: [NgOptimizedImage, UpperCasePipe],
+  imports: [NgOptimizedImage, UpperCasePipe, RouterLink],
   templateUrl: './category-grid-item.component.html',
-  styles: ``
+  styles: ``,
 })
 export class CategoryGridItemComponent {
   item = input.required<CategoryItem>();
 
   router = inject(Router);
-
-  showByCategory() {
-    this.router.navigate(['propiedades/categoria', this.item().id]);
-  }
 }

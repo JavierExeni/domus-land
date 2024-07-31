@@ -32,6 +32,7 @@ import { ButtonModule } from 'primeng/button';
 import { SendInfoFormComponent } from './components/send-info-form/send-info-form.component';
 import { GalleryGridComponent } from './components/gallery-grid/gallery-grid.component';
 import { forkJoin, map, Observable, of, switchMap } from 'rxjs';
+import { AuthService } from 'src/app/auth/auth.service';
 
 @Component({
   selector: 'app-detail-property',
@@ -53,14 +54,14 @@ import { forkJoin, map, Observable, of, switchMap } from 'rxjs';
 })
 export class DetailPropertyComponent implements OnInit {
   activatedRoute = inject(ActivatedRoute);
-  propertyService = inject(PropertyService);
-  // authService = inject(AuthService);
-  userService = inject(UserService);
+  authService = inject(AuthService);
   alertService = inject(AlertService);
-  messageService = inject(MessageService);
   clipboard = inject(Clipboard);
+  propertyService = inject(PropertyService);
+  messageService = inject(MessageService);
   metaService = inject(Meta);
   titleService = inject(Title);
+  userService = inject(UserService);
 
   userType = USER_TYPE;
 
@@ -75,44 +76,47 @@ export class DetailPropertyComponent implements OnInit {
   selectedProperty: Property | undefined;
 
   property: Property | undefined;
-
-  combined$!: Observable<{
-    user: Employee;
-    property: Property;
-    latlng: number[];
-  }>;
+  agent: Employee | undefined;
 
   constructor() {
+    this.activatedRoute.data.subscribe(({ property, user }) => {
+      if (user) this.agent = user;
+      this.property = property;
+      const images = property.gallery?.filter((el: any) => !el.is_banner);
+      const banner = property.gallery?.find((el: any) => el.is_banner);
+      this.images = banner ? [banner, ...images!] : [...images!];
+      afterNextRender(() => {
+        this.updateMetaTags(property, banner!);
+      });
+    });
+  }
+
+  ngOnInit(): void {
     // this.activatedRoute.data.subscribe(({ property }) => {
     //   this.property = property;
     //   const images = property.gallery?.filter((el: any) => !el.is_banner);
     //   const banner = property.gallery?.find((el: any) => el.is_banner);
     //   this.images = banner ? [banner, ...images!] : [...images!];
-    //   console.log(property)
-    //   afterNextRender(() => {
-    //     this.updateMetaTags(property, banner!);
-    //   });
+    //   console.log(property);
+    //   this.updateMetaTags(property, banner!);
     // });
-  }
-
-  ngOnInit(): void {
-    this.activatedRoute.data.subscribe(({ property }) => {
-      this.property = property;
-      const images = property.gallery?.filter((el: any) => !el.is_banner);
-      const banner = property.gallery?.find((el: any) => el.is_banner);
-      this.images = banner ? [banner, ...images!] : [...images!];
-      console.log(property);
-      this.updateMetaTags(property, banner!);
-    });
   }
 
   updateMetaTags(property: Property, banner: PropertyGallery) {
     this.titleService.setTitle(property.property_title);
 
-    const imageUrl = banner.file_watermark ? banner.file_watermark : 'default-image-url.jpg';
-    this.metaService.updateTag({ property: 'og:title', content: property.property_title });
+    const imageUrl = banner.file_watermark
+      ? banner.file_watermark
+      : 'default-image-url.jpg';
+    this.metaService.updateTag({
+      property: 'og:title',
+      content: property.property_title,
+    });
     this.metaService.updateTag({ property: 'og:image', content: imageUrl });
-    this.metaService.updateTag({ property: 'og:url', content: window.location.href });
+    this.metaService.updateTag({
+      property: 'og:url',
+      content: window.location.href,
+    });
   }
 
   updateEstate(state: PROPERTY_STATE, property: Property) {

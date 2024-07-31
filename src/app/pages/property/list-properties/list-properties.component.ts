@@ -1,7 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { PaginatorModule } from 'primeng/paginator';
+import { PaginatorModule, PaginatorState } from 'primeng/paginator';
 import { SidebarModule } from 'primeng/sidebar';
 
 import { PropertyService } from '@services/property.service';
@@ -72,17 +72,15 @@ export class ListPropertiesComponent implements OnInit{
   }
 
 
-  onPageChange(event: any) {
-    console.log(event);
-    this.first = event.first;
-    this.rows = event.rows;
-    const page = event.page + 1;
+  onPageChange(event: PaginatorState) {
+    this.first = event.first!;
+    this.rows = event.rows!;
+    const page = event.page! + 1;
     window.scroll({
       top: 0,
       left: 0,
       behavior: 'smooth',
     });
-    setTimeout(() => {}, 2000);
     if (this.propertyService.filter_general_property()) {
       this.propertyService
         .filteredProperties(

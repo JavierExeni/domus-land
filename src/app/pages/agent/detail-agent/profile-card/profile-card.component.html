@@ -1,0 +1,105 @@
+<div
+class="relative flex flex-col w-max bg-white border border-gray-200 rounded-lg shadow-sm m-auto gap-0 h-auto"
+>
+<div>
+  <img
+    class="object-cover rounded-lg w-[250px] m-4"
+    [src]="
+      data().image_profile
+        ? data().image_profile
+        : 'images/image-profile.webp'
+    "
+    alt="image profile"
+  />
+</div>
+<div
+  class="flex flex-col justify-between px-4 py-4 pt-0 leading-normal w-full"
+>
+  <h5 class="text-2xl font-bold tracking-tight text-gray-900 mb-1">
+    {{ data().first_name | titlecase }} {{ data().last_name | titlecase }}
+  </h5>
+  <p class="mb-3 text-sm">
+    <span>Agente Firma Propiedades </span>
+  </p>
+
+  <div class="flex gap-2 mb-2">
+    <p>Ciudad:</p>
+    <p class="font-semibold">
+      {{ data().city ? (data().city!.name | titlecase) : "Todas" }}
+    </p>
+  </div>
+  <div class="flex gap-2 mb-2">
+    <p>Whatsapp:</p>
+    <p class="font-semibold">{{ data().phone }}</p>
+  </div>
+  <div class="flex gap-2">
+    <p>Email:</p>
+    <p class="font-semibold">{{ data().email }}</p>
+  </div>
+  <hr class="h-px my-2 bg-gray-200 border-0 dark:bg-gray-700" />
+  <div class="flex items-center gap-2">
+    @if (data().facebook) {
+    <a
+      [href]="data().facebook"
+      target="_blank"
+      id="facebook-icon"
+      class="text-white bg-[#1e3a58] hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm p-2.5 text-center inline-flex items-center"
+    >
+      <i
+        class="fab fa-facebook-f w-5 h-5 !flex items-center justify-center"
+      ></i>
+    </a>
+    } @if (data().whatsapp) {
+    <a
+      [href]="data().whatsapp"
+      target="_blank"
+      id="whatsapp-icon"
+      class="text-white bg-[#1e3a58] hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm p-2.5 text-center inline-flex items-center"
+    >
+      <i
+        class="fa-brands fa-whatsapp w-5 h-5 !flex items-center justify-center"
+      ></i>
+    </a>
+    } @if (data().instagram) {
+    <a
+      [href]="data().instagram"
+      target="_blank"
+      id="instagram-icon"
+      class="text-white bg-[#1e3a58] hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm p-2.5 text-center inline-flex items-center"
+    >
+      <i
+        class="fa-brands fa-instagram w-5 h-5 !flex items-center justify-center"
+      ></i>
+
+    </a>
+    } @if (data().tiktok) {
+    <a
+      [href]="data().tiktok"
+      target="_blank"
+      id="tiktok-icon"
+      class="text-white bg-[#1e3a58] hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm p-2.5 text-center inline-flex items-center"
+    >
+      <i
+        class="fa-brands fa-tiktok w-5 h-5 !flex items-center justify-center"
+      ></i>
+    </a>
+    }
+  </div>
+
+  <!-- @if (currentLoggedInID === data().id) {
+    <button
+      (click)="editModal = true"
+      aria-label="edit button"
+      type="button"
+      pTooltip="Edita tu información"
+      tooltipPosition="bottom"
+      class="absolute shadow-lg top-2 right-2 text-white bg-[#ecc17d] hover:bg-[#e1b878] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm p-2.5 text-center inline-flex items-center"
+    >
+      <i
+        class="fa-solid fa-user-pen w-5 h-5 flex items-center justify-center"
+      ></i>
+      <span class="sr-only">Icon description</span>
+    </button>
+  } -->
+</div>
+</div>

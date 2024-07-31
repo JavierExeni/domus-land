@@ -74,3 +74,16 @@
     grid-template-columns: repeat(1, minmax(0, 1fr));
   }
 }
+
+
+.p-message-wrapper {
+  padding: 10px !important;
+}
+
+.p-message {
+  margin: 0px !important;
+}
+
+.p-message-icon {
+  display: flex;
+}

@@ -9,11 +9,18 @@ import { OurAgentsComponent } from './components/our-agents/our-agents.component
 @Component({
   selector: 'app-principal',
   standalone: true,
-  imports: [BannerComponent, ContractTypeComponent, WeekOffersComponent, CategoryGridComponent, OurAgentsComponent],
+  imports: [
+    BannerComponent,
+    ContractTypeComponent,
+    WeekOffersComponent,
+    CategoryGridComponent,
+    OurAgentsComponent,
+  ],
   templateUrl: './principal.component.html',
-  styles: ``
+  styles: `
+  `,
 })
-export class PrincipalComponent implements OnInit{
+export class PrincipalComponent implements OnInit {
   systemService = inject(SystemService);
 
   ngOnInit(): void {

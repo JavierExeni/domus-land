@@ -1,0 +1,117 @@
+<form
+  class="grid gap-x-4 gap-y-10 xl:gap-x-10 items-baseline mt-5"
+  [formGroup]="formContactSell"
+  (ngSubmit)="onSubmit()"
+>
+  <div class="grid gap-x-4 gap-y-10 lg:grid-cols-2 xl:gap-x-10 items-baseline">
+    <ng-container>
+      <div class="form-element">
+        <p-floatLabel>
+          <input
+            pInputText
+            id="name"
+            type="text"
+            formControlName="name"
+            class="w-full"
+          />
+          <label for="name">Nombre <strong>(*)</strong></label>
+        </p-floatLabel>
+      </div>
+      <div class="form-element">
+        <p-floatLabel>
+          <p-inputNumber
+            id="inputNumber"
+            formControlName="phone"
+            mode="decimal"
+            inputId="phone"
+            [useGrouping]="false"
+            class="w-full"
+          >
+          </p-inputNumber>
+          <label htmlFor="number-input"
+            >Teléfono Celular <strong>(*)</strong></label
+          >
+        </p-floatLabel>
+      </div>
+    </ng-container>
+  </div>
+
+  <div class="form-element">
+    <p-floatLabel>
+      <textarea
+        class="w-full"
+        id="message"
+        formControlName="message"
+        rows="3"
+        cols="30"
+        pInputTextarea
+      ></textarea>
+      <label for="message">Descripcion <strong>(*)</strong></label>
+    </p-floatLabel>
+  </div>
+
+  <div class="form-element">
+    <p-floatLabel>
+      <input
+        id="email"
+        type="text"
+        formControlName="email"
+        pInputText
+        class="w-full"
+      />
+      <label for="email">Correo Electrónico <strong>(*)</strong></label>
+    </p-floatLabel>
+  </div>
+
+  <div class="form-element">
+    <label for="property_category">Tipo propiedad <strong>(*)</strong></label>
+    <p-dropdown
+      id="property_category"
+      [options]="propertyCategoryOptions"
+      optionLabel="name"
+      optionValue="id"
+      [filter]="false"
+      formControlName="property_category"
+      emptyFilterMessage="Sin resultados."
+      emptyMessage="Sin resultados."
+      filterBy="name"
+      [showClear]="true"
+      placeholder="Selecciona un Tipo de propiedad"
+      [ngClass]="{ 'dropdown-custom': true }"
+      appendTo="body"
+    >
+    </p-dropdown>
+  </div>
+
+  <div class="form-element">
+    <label for="role">Estado <strong>(*)</strong></label>
+    <p-dropdown
+      id="property_type"
+      formControlName="property_type"
+      [options]="propertyTypeOptions"
+      optionLabel="name"
+      optionValue="id"
+      [filter]="false"
+      formControlName="property_type"
+      emptyFilterMessage="Sin resultados."
+      emptyMessage="Sin resultados."
+      filterBy="name"
+      [showClear]="true"
+      placeholder="Selecciona el estado de la propiedad"
+      [ngClass]="{ 'dropdown-custom': true }"
+      appendTo="body"
+    >
+    </p-dropdown>
+  </div>
+
+  <div class="flex justify-end">
+    <button
+      type="submit"
+      [disabled]="formContactSell.invalid"
+      aria-label="submit button"
+      class="text-white bg-[#ecc17d] hover:bg-[#ecc17d]/80 focus:ring-4 focus:ring-[#ecc17d] disabled:bg-[#ecc17d]/50 font-medium rounded-lg text-sm px-4 py-3 focus:outline-none"
+    >
+      Guardar
+    </button>
+  </div>
+</form>
