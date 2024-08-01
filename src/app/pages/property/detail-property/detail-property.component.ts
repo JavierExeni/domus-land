@@ -74,6 +74,10 @@ export class DetailPropertyComponent implements OnInit {
   agent: Employee | undefined;
 
   constructor() {
+
+  }
+
+  ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ property, user, agent }) => {
       if (user) {
         console.log(user);
@@ -88,13 +92,11 @@ export class DetailPropertyComponent implements OnInit {
       const images = property.gallery?.filter((el: any) => !el.is_banner);
       const banner = property.gallery?.find((el: any) => el.is_banner);
       this.images = banner ? [banner, ...images!] : [...images!];
-      afterNextRender(() => {
-        this.updateMetaTags(property, banner!);
-      });
+      this.updateMetaTags(property, banner!);
+      // afterNextRender(() => {
+      // });
     });
   }
-
-  ngOnInit(): void {}
 
   updateMetaTags(property: Property, banner: PropertyGallery) {
     this.titleService.setTitle(property.property_title);
