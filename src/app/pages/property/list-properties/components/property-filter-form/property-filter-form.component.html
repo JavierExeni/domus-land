@@ -101,6 +101,7 @@
     <label for="precio">Introduzca su precio en $us</label>
     <div class="grid grid-cols-2 gap-2">
       <p-inputNumber
+        id="precio"
         formControlName="price_min"
         mode="decimal"
         placeholder="Precio Min."
@@ -142,11 +143,11 @@
   </div>
 
   <div class="form-element">
-    <label for="num_parking"
+    <label for="numparking"
       >N° Parqueos <strong>{{ PARKINGS | slideOptionProperty }}</strong></label
     >
     <p-slider
-      id="num_parking"
+      id="numparking"
       [min]="0"
       [max]="11"
       formControlName="num_parking"

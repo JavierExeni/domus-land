@@ -28,7 +28,7 @@ import {
   styles: ``,
 })
 export class SendInfoFormComponent {
-  user = input.required<Employee>();
+  user = input<Employee>();
   property = input.required<Property>();
   isLink = input(false);
   showButtons = input(false);
@@ -65,7 +65,8 @@ export class SendInfoFormComponent {
     this.formContact.get('contact_type')?.setValue(this.contactType);
     this.formContact.get('property_id')?.setValue(this.property().id);
     if (this.isLink() || this.ROLE) {
-      this.formContact.get('agent')?.setValue(this.user().id);
+      console.log(this.user())
+      this.formContact.get('agent')?.setValue(this.user()!.id);
     }
   }
 
@@ -100,7 +101,7 @@ export class SendInfoFormComponent {
         this.formContact.get('contact_type')?.setValue(this.contactType);
         this.formContact.get('property_id')?.setValue(this.property().id);
         if (this.isLink() || this.ROLE) {
-          this.formContact.get('agent')?.setValue(this.user().id);
+          this.formContact.get('agent')?.setValue(this.user()!.id);
         }
       },
       error: () => {
@@ -155,7 +156,7 @@ export class SendInfoFormComponent {
       'Quiero mas información sobre esta propiedad:'
     );
     let url = `https://api.whatsapp.com/send?phone=591${
-      this.user().phone
+      this.user()!.phone
     }&text=${title}%0A%0A${link}`;
     window.open(url, '_blank');
   }

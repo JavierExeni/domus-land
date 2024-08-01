@@ -8,6 +8,7 @@ import { ContactSellPropertyFormComponent } from '../contact-sell-property-form/
 import { ContactFormComponent } from '../contact-form/contact-form.component';
 import { LoginComponent } from '../../auth/login/login.component';
 import { AuthService } from '../../auth/auth.service';
+import { AsyncPipe } from '@angular/common';
 @Component({
   selector: 'navbar',
   standalone: true,
@@ -19,6 +20,7 @@ import { AuthService } from '../../auth/auth.service';
     ContactSellPropertyFormComponent,
     ContactFormComponent,
     LoginComponent,
+    AsyncPipe
   ],
   templateUrl: './navbar.component.html',
   styles: ``,
@@ -31,11 +33,9 @@ export class NavbarComponent {
   contactFormVisible = false;
   loginVisible = false;
 
+
+
   openSidebar() {
     this.sidebarVisible = !this.sidebarVisible;
-  }
-
-  logout() {
-    this.authService.logout();
   }
 }

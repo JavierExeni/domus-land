@@ -53,8 +53,6 @@ export class ContactSellPropertyFormComponent {
 
   propertyTypeOptions = getPropertyTypes();
 
-  constructor() {}
-
   onSubmit() {
     const request: ContactRequest = this.formContactSell.getRawValue();
     console.log(request);

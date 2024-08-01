@@ -19,7 +19,7 @@ import { SendInfoFormComponent } from '../send-info-form/send-info-form.componen
 })
 export class GalleryGridComponent implements OnInit{
   property = input.required<Property>();
-  user = input.required<Employee>();
+  user = input<Employee>();
   isLink = input(false);
   images = input<PropertyGallery[]>([]);
 

@@ -1,8 +1,14 @@
-<p-button
-  label="Descarga de imágenes en bloque"
-  aria-label="descarga de imagenes button"
-  (onClick)="downloadBulk()"
-></p-button>
+@if (authService.isLoggedIn()) {
+  <p-button
+    aria-label="descarga de imagenes button"
+    (onClick)="downloadBulk()"
+    [loading]="isLoadingBulk"
+  >
+  <i class="fa-solid fa-download"></i>
+  <span class="px-3">Descarga de imágenes en bloque</span>
+</p-button>
+}
+
 @for (item of images(); track $index; let i = $index) {
 <div class="mt-3">
   <div class="hidden xl:block relative">
@@ -16,23 +22,23 @@
       (onImageError)="errorImage(i)"
       appendTo="body"
     ></p-image>
-    <span class="absolute top-3 right-3 z-50">
+    <!-- <span class="absolute top-3 right-3 z-50">
       <div class="flex flex-col gap-2 text-end">
-        <!-- <ng-container *ngIf="this.authService.currentLoggedUser">
+        <ng-container *ngIf="this.authService.currentLoggedUser">
             <p-button
               *ngIf="this.authService.currentLoggedUser!.role == USER_TYPE.ADMIN"
               aria-label="currentLoggedUser button"
               (onClick)="downloadSingleOriginal(item)"
               label="Original"
             ></p-button>
-          </ng-container> -->
+          </ng-container>
         <p-button
           (onClick)="downloadSingleWater(item)"
           aria-label="descarga individual button"
           label="Marca de Agua"
         ></p-button>
       </div>
-    </span>
+    </span> -->
   </div>
   <div class="xl:hidden relative">
     <p-image
@@ -44,23 +50,23 @@
       (error)="errorImage(i)"
       appendTo="body"
     ></p-image>
-    <span class="absolute top-3 right-3 z-50">
+    <!-- <span class="absolute top-3 right-3 z-50">
       <div class="flex flex-col gap-2 text-end">
-        <!-- <ng-container *ngIf="this.authService.currentLoggedUser">
+        <ng-container *ngIf="this.authService.currentLoggedUser">
             <p-button
               *ngIf="this.authService.currentLoggedUser!.role == USER_TYPE.ADMIN"
               aria-label="currentLoggedUser button"
               (onClick)="downloadSingleOriginal(item)"
               label="Original"
             ></p-button>
-          </ng-container> -->
+          </ng-container>
         <p-button
           (onClick)="downloadSingleWater(item)"
           aria-label="descarga infividual button"
           label="Marca de Agua"
         ></p-button>
       </div>
-    </span>
+    </span> -->
   </div>
 </div>
 }

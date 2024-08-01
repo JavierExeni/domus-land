@@ -1,1 +1,8 @@
-<p>public-map works!</p>
+<google-map [center]="center" [options]="mapOptions">
+  @if(role() == null){
+  <map-circle [center]="center" [radius]="radius"></map-circle>
+  }
+  @if (role() == userType.AGENTE || role() == userType.ADMIN) {
+  <map-marker [position]="center" [options]="markerOptions"></map-marker>
+  }
+</google-map>

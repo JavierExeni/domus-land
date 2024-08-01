@@ -1,17 +1,14 @@
-import {
-  afterNextRender,
-  afterRender,
-  Component,
-  inject,
-  OnInit,
-} from '@angular/core';
+import { afterNextRender, Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Meta, Title } from '@angular/platform-browser';
 import { Clipboard, ClipboardModule } from '@angular/cdk/clipboard';
+import { CommonModule } from '@angular/common';
 
 import { PropertyService } from '@services/property.service';
 import { UserService } from '@services/user.service';
 import { AlertService } from '@services/alert.service';
+import { AuthService } from '../../../auth/auth.service';
+
 import {
   Employee,
   getPropertyStateById,
@@ -22,7 +19,6 @@ import {
 } from 'src/app/types';
 
 import { MessageService } from 'primeng/api';
-import { CommonModule } from '@angular/common';
 import { ImageModule } from 'primeng/image';
 import { DialogModule } from 'primeng/dialog';
 import { SkeletonModule } from 'primeng/skeleton';
@@ -31,8 +27,7 @@ import { ButtonModule } from 'primeng/button';
 
 import { SendInfoFormComponent } from './components/send-info-form/send-info-form.component';
 import { GalleryGridComponent } from './components/gallery-grid/gallery-grid.component';
-import { forkJoin, map, Observable, of, switchMap } from 'rxjs';
-import { AuthService } from 'src/app/auth/auth.service';
+import { PublicMapComponent } from '../../../components/public-map/public-map.component';
 
 @Component({
   selector: 'app-detail-property',
@@ -47,6 +42,7 @@ import { AuthService } from 'src/app/auth/auth.service';
     ClipboardModule,
     ToastModule,
     ButtonModule,
+    PublicMapComponent,
   ],
   templateUrl: './detail-property.component.html',
   styles: ``,
@@ -70,7 +66,6 @@ export class DetailPropertyComponent implements OnInit {
 
   images: PropertyGallery[] = [];
 
-  propertyId = 0;
   isLoggedIn = false;
 
   selectedProperty: Property | undefined;
@@ -79,8 +74,16 @@ export class DetailPropertyComponent implements OnInit {
   agent: Employee | undefined;
 
   constructor() {
-    this.activatedRoute.data.subscribe(({ property, user }) => {
-      if (user) this.agent = user;
+    this.activatedRoute.data.subscribe(({ property, user, agent }) => {
+      if (user) {
+        console.log(user);
+        this.agent = user;
+        this.isLink = true;
+      }
+      if (agent) {
+        this.agent = agent;
+      }
+
       this.property = property;
       const images = property.gallery?.filter((el: any) => !el.is_banner);
       const banner = property.gallery?.find((el: any) => el.is_banner);
@@ -91,16 +94,7 @@ export class DetailPropertyComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {
-    // this.activatedRoute.data.subscribe(({ property }) => {
-    //   this.property = property;
-    //   const images = property.gallery?.filter((el: any) => !el.is_banner);
-    //   const banner = property.gallery?.find((el: any) => el.is_banner);
-    //   this.images = banner ? [banner, ...images!] : [...images!];
-    //   console.log(property);
-    //   this.updateMetaTags(property, banner!);
-    // });
-  }
+  ngOnInit(): void {}
 
   updateMetaTags(property: Property, banner: PropertyGallery) {
     this.titleService.setTitle(property.property_title);
@@ -162,13 +156,12 @@ export class DetailPropertyComponent implements OnInit {
       summary: '¡Copiado!',
       detail: 'Link copiado',
     });
-
-    // let user: ICurrentUser = this.authService.currentLoggedUser!;
-
-    // this.clipboard
-    //   .copy
-    //   // `${window.location.origin}/propiedades/${this.propertyId}/${user.id}`
-    //   ();
+    const currentUser = this.authService.currentLoggedUser();
+    this.clipboard.copy(
+      `${window.location.origin}/propiedades/${this.property!.id}/${
+        currentUser.id
+      }`
+    );
   }
 
   share(social: string) {

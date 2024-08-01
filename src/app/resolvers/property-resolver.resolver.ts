@@ -23,3 +23,11 @@ export const propertyUserResolver: ResolveFn<Employee> = (
   const userId = route.paramMap.get('userId');
   return inject(UserService).getSingleEmployee(Number(userId));
 };
+
+export const propertyAgentResolver: ResolveFn<Employee> = (
+  route: ActivatedRouteSnapshot,
+  state: RouterStateSnapshot
+) => {
+  const agentId = route.paramMap.get('agentId');
+  return inject(UserService).getSingleEmployee(Number(agentId));
+};

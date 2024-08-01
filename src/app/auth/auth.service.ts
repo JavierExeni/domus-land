@@ -8,7 +8,7 @@ import {
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 
-import { concatMap, map, Observable, tap } from 'rxjs';
+import { BehaviorSubject, concatMap, map, Observable, tap } from 'rxjs';
 
 import { UserService } from '@services/user.service';
 import { environment } from '@envs/environment';
@@ -69,6 +69,25 @@ export class AuthService {
     }));
   }
 
+  isLoggedInBh: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
+    this.hasToken()
+  );
+
+  get isLoggedInSubject() {
+    return this.isLoggedInBh.asObservable();
+  }
+
+  /**
+   * if we have token the user is loggedIn
+   * @returns {boolean}
+   */
+  private hasToken(): boolean {
+    if (isPlatformBrowser(this.platformId)) {
+      return !!this.persistanceService.get('accessToken');
+    }
+    return false;
+  }
+
   public isLoading = computed<boolean>(() => this.#state().loading);
   public user = computed<CurrentUser | null>(() => this.#state().user);
   public role = computed<USER_TYPE | null>(() => {
@@ -108,6 +127,7 @@ export class AuthService {
       }),
       tap((user) => {
         this.changeLoadingState(false);
+        this.isLoggedInBh.next(true);
         this.persistanceService.set('currentUser', user);
         this.changeUserState(user);
       })
@@ -133,6 +153,7 @@ export class AuthService {
   logout() {
     localStorage.clear();
     this.changeUserState(null);
+    this.isLoggedInBh.next(false);
     this.router.navigate(['/']);
   }
 }

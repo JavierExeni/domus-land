@@ -9,13 +9,14 @@ import { CommonModule } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
 import { GalleriaModule } from 'primeng/galleria';
 import { ImageModule } from 'primeng/image';
+import { AuthService } from 'src/app/auth/auth.service';
 
 @Component({
   selector: 'app-gallery-list',
   standalone: true,
   imports: [CommonModule, ImageModule, ButtonModule, GalleriaModule],
   templateUrl: './gallery-list.component.html',
-  styles: ``
+  styles: ``,
 })
 export class GalleryListComponent {
   @HostListener('window:keydown.escape', ['$event'])
@@ -26,7 +27,7 @@ export class GalleryListComponent {
   images = input.required<PropertyGallery[] | any>();
   property = input.required<Property>();
 
-  // authService = inject(AuthService);
+  authService = inject(AuthService);
   propertyGalleryService = inject(PropertyGalleryService);
 
   displayGallery = false;
@@ -34,6 +35,8 @@ export class GalleryListComponent {
   USER_TYPE = USER_TYPE;
 
   activeIndex = 0;
+
+  isLoadingBulk = false;
 
   responsiveOptions: any[] = [
     {
@@ -81,9 +84,11 @@ export class GalleryListComponent {
   }
 
   downloadBulk() {
+    this.isLoadingBulk = true;
     this.propertyGalleryService
       .downloadbulkImages(this.property().id)
       .subscribe((res) => {
+        this.isLoadingBulk = false;
         FileSaver.saveAs(res, `bulk-images-${this.property().id}.zip`);
       });
   }

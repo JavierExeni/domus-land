@@ -1,5 +1,5 @@
 import { NgClass, UpperCasePipe, NgIf } from '@angular/common';
-import { afterRender, Component, HostListener, inject } from '@angular/core';
+import { afterNextRender, afterRender, Component, HostListener, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { SystemService } from '@services/system.service';
 import { InitFilterFormComponent } from './components/init-filter-form/init-filter-form.component';
@@ -42,7 +42,7 @@ export class BannerComponent {
   private ticking = false;
 
   constructor() {
-    afterRender(() => {
+    afterNextRender(() => {
       this.onWindowScroll();
     });
   }

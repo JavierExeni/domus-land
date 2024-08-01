@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { propertyResolver, propertyUserResolver } from './resolvers/property-resolver.resolver';
+import { propertyAgentResolver, propertyResolver, propertyUserResolver } from './resolvers/property-resolver.resolver';
 import { agentResolver } from './resolvers/agent-resolver.resolver';
 
 export const routes: Routes = [
@@ -56,24 +56,26 @@ export const routes: Routes = [
       ),
   },
   {
-    path: 'propiedades/:id',
+    path: 'propiedades/:id/:agentId',
     loadComponent: () =>
       import('./pages/property/detail-property/detail-property.component').then(
         (c) => c.DetailPropertyComponent
       ),
     resolve: {
       property: propertyResolver,
+      agent: propertyAgentResolver
     },
   },
   {
-    path: 'propiedades/:id/:userId',
+    path: 'propiedades/:id/:userId/:agentId',
     loadComponent: () =>
       import('./pages/property/detail-property/detail-property.component').then(
         (c) => c.DetailPropertyComponent
       ),
     resolve:{
       property : propertyResolver,
-      user: propertyUserResolver
+      user: propertyUserResolver,
+      agent: propertyAgentResolver
     }
   },
   // {

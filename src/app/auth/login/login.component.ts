@@ -1,5 +1,5 @@
 import { AsyncPipe, JsonPipe, NgIf } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, inject, output } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
@@ -29,6 +29,8 @@ import { MessagesModule } from 'primeng/messages';
   providers: [MessagesModule],
 })
 export class LoginComponent {
+  visible = output<boolean>();
+
   private _fb = inject(FormBuilder);
   authService = inject(AuthService);
   router = inject(Router);
@@ -62,11 +64,10 @@ export class LoginComponent {
     const request: LoginRequest = this.form.getRawValue();
     this.authService.login(request).subscribe({
       next: (res) => {
-        console.log(res);
         this.router.navigateByUrl('');
+        this.visible.emit(false);
       },
       error: (err: HttpErrorResponse) => {
-        console.log(err);
         this.invalid = true;
         this.messages = [{ severity: 'error', detail: 'Credenciales incorrectas' }];
         this.authService.changeLoadingState(false);

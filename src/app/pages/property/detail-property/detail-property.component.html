@@ -1,5 +1,5 @@
 <!-- <ng-container *ngIf="combined$ | async as data; else skeleton"> -->
-@if (images.length && property && agent) {
+@if (images.length && property) {
 <div class="w-[90%] lg:max-w-[1000px] mx-auto">
   <div class="py-10">
     <app-gallery-grid
@@ -199,7 +199,7 @@
   [style]="{ width: '80vw' }"
   header="Ubicación de la propiedad"
 >
-  <!-- <app-public-map [property]="data.property"></app-public-map> -->
+  <app-public-map [property]="property"></app-public-map>
 </p-dialog>
 }
 <p-toast></p-toast>

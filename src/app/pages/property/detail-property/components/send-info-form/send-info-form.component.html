@@ -4,31 +4,15 @@
       Solicita Más Información
     </h5>
     <div>
-      @if (ROLE && ROLE == userType.AGENTE) {
       <div>
         <img
           class="w-[200px] rounded-xl mb-3"
-          [src]="user().image_profile"
+          [src]="user()!.image_profile ? user()!.image_profile : 'images/image-profile.webp'"
           alt="agent image profile"
         />
         <p>
-          {{ user().first_name }}
-          {{ user().last_name }}
-        </p>
-        <p>
-          {{ user().phone }}
-        </p>
-      </div>
-      } @if (ROLE && ROLE == userType.ADMIN) {
-      <div>
-        <img
-          class="w-[200px] rounded-xl mb-3"
-          [src]="user().image_profile"
-          alt="admin image profile"
-        />
-        <p class="font-semibold">
-          {{ user().first_name }}
-          {{ user().last_name }}
+          {{ user()!.first_name }}
+          {{ user()!.last_name }}
         </p>
         <div class="flex">
           <p-button
@@ -41,39 +25,11 @@
             (click)="sendWhatsapp()"
             class="flex ml-2 justify-center items-center"
           >
-            {{ user().phone }}
+            {{ user()!.phone }}
           </a>
         </div>
       </div>
-      }
     </div>
-    @if (isLink()) {
-    <div>
-      <img
-        class="w-[200px] rounded-xl mb-3"
-        [src]="user().image_profile"
-        alt="image profile by link"
-      />
-      <p class="font-semibold">
-        {{ user().first_name }}
-        {{ user().last_name }}
-      </p>
-      <div class="flex">
-        <p-button
-          styleClass="p-0 !bg-[#00a884] border !border-[#00a884]"
-          (onClick)="sendWhatsapp()"
-          aria-label="send button"
-          icon="pi pi-whatsapp"
-        ></p-button>
-        <a
-          (click)="sendWhatsapp()"
-          class="flex ml-2 justify-center items-center"
-        >
-          {{ user().phone }}
-        </a>
-      </div>
-    </div>
-    }
 
     <form
       class="flex flex-col gap-3 mt-3"
